@@ -6,12 +6,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
+
 
 @Entity
 public class Employee {
@@ -21,6 +24,7 @@ public class Employee {
 	@NotEmpty
 	private String name;
 	@NotEmpty
+	@Length(min=8)
 	private String password;
 	private int contact_no;
 	@Email
@@ -30,12 +34,17 @@ public class Employee {
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private Date doh;
+	private int manager_id;
+	@OneToMany	
+	private LeaveApplication leaveapplication;
+	@OneToMany
+	private LeaveBalance leavebalance;
 	public Employee() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Employee(@NotEmpty String name, @NotEmpty String password, int contact_no, @Email String email,
-			String address, Role role, Date doh) {
+	public Employee(@NotEmpty String name, @NotEmpty @Length(min = 8) String password, int contact_no,
+			@Email String email, String address, Role role, Date doh, int manager_id) {
 		super();
 		this.name = name;
 		this.password = password;
@@ -44,6 +53,22 @@ public class Employee {
 		this.address = address;
 		this.role = role;
 		this.doh = doh;
+		this.manager_id = manager_id;
+	}
+	public Employee(@NotEmpty String name, @NotEmpty @Length(min = 8) String password, int contact_no,
+			@Email String email, String address, Role role, Date doh, int manager_id, LeaveApplication leaveapplication,
+			LeaveBalance leavebalance) {
+		super();
+		this.name = name;
+		this.password = password;
+		this.contact_no = contact_no;
+		this.email = email;
+		this.address = address;
+		this.role = role;
+		this.doh = doh;
+		this.manager_id = manager_id;
+		this.leaveapplication = leaveapplication;
+		this.leavebalance = leavebalance;
 	}
 	public int getId() {
 		return id;
@@ -93,13 +118,28 @@ public class Employee {
 	public void setDoh(Date doh) {
 		this.doh = doh;
 	}
+	public int getManager_id() {
+		return manager_id;
+	}
+	public void setManager_id(int manager_id) {
+		this.manager_id = manager_id;
+	}
+	public LeaveApplication getLeaveapplication() {
+		return leaveapplication;
+	}
+	public void setLeaveapplication(LeaveApplication leaveapplication) {
+		this.leaveapplication = leaveapplication;
+	}
+	public LeaveBalance getLeavebalance() {
+		return leavebalance;
+	}
+	public void setLeavebalance(LeaveBalance leavebalance) {
+		this.leavebalance = leavebalance;
+	}
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", name=" + name + ", password=" + password + ", contact_no=" + contact_no
 				+ ", email=" + email + ", address=" + address + ", role=" + role + ", doh=" + doh + "]";
 	}
 	
-	
-	
-
 }

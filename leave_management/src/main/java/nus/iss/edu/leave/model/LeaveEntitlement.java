@@ -12,6 +12,7 @@ public class LeaveEntitlement {
 	private LeaveType type;
 	private Role role;
 	private int leave_count;
+	
 	public LeaveEntitlement() {
 		super();
 		// TODO Auto-generated constructor stub

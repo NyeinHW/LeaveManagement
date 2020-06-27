@@ -1,5 +1,5 @@
 package nus.iss.edu.leave.controller;
 
-public class ManagerController {
+public class ManagerController extends EmployeeController {
 
 }

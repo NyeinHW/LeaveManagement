@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -26,6 +28,10 @@ public class LeaveApplication {
 	private Date end_date;
 	private Status status;
 	private String manager_cmt;
+	@ManyToOne
+	private Employee employee;
+	@OneToOne
+	private LeaveEntitlement leaveentitlement;
 	public LeaveApplication() {
 		super();
 		// TODO Auto-generated constructor stub
