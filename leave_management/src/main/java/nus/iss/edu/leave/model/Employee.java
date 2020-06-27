@@ -1,6 +1,7 @@
 package nus.iss.edu.leave.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,10 +36,10 @@ public class Employee {
 	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private Date doh;
 	private int manager_id;
-	@OneToMany	
-	private LeaveApplication leaveapplication;
+	@OneToMany(mappedBy="employee")
+	private List<LeaveApplication> leaveapplication;
 	@OneToMany
-	private LeaveBalance leavebalance;
+	private List<LeaveBalance> leavebalance;
 	public Employee() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -67,8 +68,8 @@ public class Employee {
 		this.role = role;
 		this.doh = doh;
 		this.manager_id = manager_id;
-		this.leaveapplication = leaveapplication;
-		this.leavebalance = leavebalance;
+		this.leaveapplication = (List<LeaveApplication>) leaveapplication;
+		this.leavebalance = (List<LeaveBalance>) leavebalance;
 	}
 	public int getId() {
 		return id;
@@ -125,16 +126,16 @@ public class Employee {
 		this.manager_id = manager_id;
 	}
 	public LeaveApplication getLeaveapplication() {
-		return leaveapplication;
+		return (LeaveApplication) leaveapplication;
 	}
 	public void setLeaveapplication(LeaveApplication leaveapplication) {
-		this.leaveapplication = leaveapplication;
+		this.leaveapplication = (List<LeaveApplication>) leaveapplication;
 	}
 	public LeaveBalance getLeavebalance() {
-		return leavebalance;
+		return (LeaveBalance) leavebalance;
 	}
 	public void setLeavebalance(LeaveBalance leavebalance) {
-		this.leavebalance = leavebalance;
+		this.leavebalance = (List<LeaveBalance>) leavebalance;
 	}
 	@Override
 	public String toString() {
