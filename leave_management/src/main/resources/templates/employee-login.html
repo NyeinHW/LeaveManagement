@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Employee Login</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h1>Employee Login</h1>
+
+<!-- Add Hyperlink -->
+    <form action="#" th:object="${Employee}" th:action="@{/employee/submit}" method="get">
+		<fieldset>
+			Username: <input type="text" th:field="*{name}">
+		</fieldset>
+		<fieldset>
+			Password: <input type="password" th:field="*{password}">
+		</fieldset>
+		<fieldset>
+			<button type="submit">Login</button>
+		</fieldset>
+	</form>
+	
+</body>
+</html>
