@@ -1,9 +1,12 @@
 package nus.iss.edu.leave.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 @Entity
 public class LeaveEntitlement {
 	@Id
@@ -12,6 +15,8 @@ public class LeaveEntitlement {
 	private LeaveType type;
 	private Role role;
 	private int leave_count;
+	@OneToMany(mappedBy="leaveentitlement")
+	private List<LeaveBalance> leavebalance;
 	
 	public LeaveEntitlement() {
 		super();

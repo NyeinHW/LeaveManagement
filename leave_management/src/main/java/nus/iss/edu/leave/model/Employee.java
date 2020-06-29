@@ -38,7 +38,7 @@ public class Employee {
 	private int manager_id;
 	@OneToMany(mappedBy="employee")
 	private List<LeaveApplication> leaveapplication;
-	@OneToMany
+	@OneToMany(mappedBy="employee")
 	private List<LeaveBalance> leavebalance;
 	public Employee() {
 		super();
