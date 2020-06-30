@@ -8,19 +8,18 @@
 </head>
 <body>
 <h1>Employee Login</h1>
-
-<!-- Add Hyperlink -->
-    <form action="#" th:object="${Employee}" th:action="@{/employee/submit}" method="get">
+    <form action="#" th:object="${employee}" th:action="@{/employee/submit}" method="post">
 		<fieldset>
 			Username: <input type="text" th:field="*{name}">
+			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
 		</fieldset>
 		<fieldset>
 			Password: <input type="password" th:field="*{password}">
+			<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
 		</fieldset>
 		<fieldset>
-			<button type="submit">Login</button>
+			<input type="submit" value="login" class="button">
 		</fieldset>
 	</form>
-	
 </body>
 </html>
