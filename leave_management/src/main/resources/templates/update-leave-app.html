@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Leave Application Form</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h1> Update Leave</h1>
+<form action='#' th:object="${leaveapplication}" th:action="@{/employee/submitLeave}" method="post">
+		<fieldset>
+			<input type="hidden" th:field="*{employee.id}" th:value="${empid}">
+		</fieldset>	
+		<fieldset>
+			<input type="hidden" th:field="*{id}">
+		</fieldset>
+		<fieldset>
+			<input type="text" th:field="*{status}" th:readonly="true">
+		</fieldset>	
+		<fieldset>
+			Leave Type: 
+			<select th:field="*{leaveentitlement.type}">
+				<option th:each="ltype:${T(nus.iss.edu.leave.model.LeaveType).values()}" 
+				 th:value="${ltype}" th:text="${ltype}"></option>
+			</select>
+		</fieldset>
+		<fieldset>
+			Start Date: <input type="text" th:field="*{start_date}"
+				placeholder="dd-MM-yyyy"
+				th:text="${#dates.format(leaveapplication.start_date, 'dd-MM-yyyy')}" />
+			<p th:if="${#fields.hasErrors('start_date')}" th:errors="*{start_date}"></p>
+		</fieldset>
+		<fieldset>
+			End Date: <input type="text" th:field="*{end_date}"
+				placeholder="dd-MM-yyyy"
+				th:text="${#dates.format(leaveapplication.end_date, 'dd-MM-yyyy')}" />
+			<p th:if="${#fields.hasErrors('end_date')}" th:errors="*{end_date}"></p>
+		</fieldset>
+		<fieldset>
+			Reasons:
+			<textarea th:field="*{reason}" cols="30" rows="10" placeholder="optional"></textarea>
+			<p th:if="${#fields.hasErrors('reason')}"
+				th:errors="*{reason}"></p>
+		</fieldset>
+				<fieldset>
+			Work Dissemination:
+			<textarea th:field="*{work_dissemination}" cols="30" rows="10" placeholder="optional"></textarea>
+			<p th:if="${#fields.hasErrors('work_dissemination')}"
+				th:errors="*{work_dissemination}"></p>
+		</fieldset>
+		<fieldset>
+			Manager Comment:
+			<textarea th:field="*{manager_cmt}" cols="30" rows="10"
+				placeholder="optional"></textarea>
+			<p th:if="${#fields.hasErrors('manager_cmt')}"
+				th:errors="*{manager_cmt}"></p>
+		</fieldset>
+		<fieldset>
+			<input type="submit" value="Save" /> 
+			&nbsp; &nbsp; 
+			<input type="reset" value="Reset" />
+		</fieldset>
+
+	</form>
+
+</body>
+</html>

@@ -9,6 +9,6 @@ import nus.iss.edu.leave.model.LeaveBalance;
 public interface LeaveBalanceRepository extends JpaRepository<LeaveBalance, Integer> {
 	
 	@Query (value="SELECT * FROM LeaveBalance lb WHERE lb.employee_id = :empid AND lb.leaveentitlement_id = :leid" , nativeQuery=true)
-	LeaveBalance findLeaveBalance(@Param("empid") Integer empid, @Param("leid") Integer leid);
+	public LeaveBalance findLeaveBalance(@Param("empid") Integer empid, @Param("leid") Integer leid);
 	
 }

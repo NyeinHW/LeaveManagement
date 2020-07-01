@@ -161,22 +161,4 @@ hr {
     border-style: inset;
     border-width: 1px;
 }
-.employee_div{
-    display: flex;
-    justify-content: space-between;	
-}
-.footer{
-	  position: fixed;
-  	  bottom: 0;
-}
-.emp_btn{
-	background-color: #008CBA;
-	border: none;
-  	color: white;
-  	text-align: center;
-  	display: inline-block;
-  	font-size: 12px;
-  	border-radius: 12px;
-  	cursor: pointer;
-}
 
