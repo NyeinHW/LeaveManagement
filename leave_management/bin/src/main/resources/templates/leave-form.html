@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Leave Application Form</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h1> Apply Leave</h1>
+<form action='#' th:object="${leaveapplication}" th:action="@{/employee/applyLeave}" method="post">
+		<fieldset>
+			Leave Type: 
+			<select>
+				<option th:each="ltype:${T(nus.iss.edu.leave.model.LeaveType).values()}"
+				 th:value="${ltype}" th:text="${ltype}"></option>
+			</select>
+		</fieldset>
+		<fieldset>
+			Start Date: <input type="text" th:field="*{start_date}"
+				placeholder="dd-MM-yyyy"
+				th:text="${#dates.format(leaveapplication.start_date, 'dd-MM-yyyy')}" />
+			<p th:if="${#fields.hasErrors('start_date')}" th:errors="*{start_date}"></p>
+		</fieldset>
+		<fieldset>
+			End Date: <input type="text" th:field="*{end_date}"
+				placeholder="dd-MM-yyyy"
+				th:text="${#dates.format(leaveapplication.end_date, 'dd-MM-yyyy')}" />
+			<p th:if="${#fields.hasErrors('end_date')}" th:errors="*{end_date}"></p>
+		</fieldset>
+		<fieldset>
+			Reasons:
+			<textarea th:field="*{reason}" cols="30" rows="10" placeholder="optional"></textarea>
+			<p th:if="${#fields.hasErrors('reason')}"
+				th:errors="*{reason}"></p>
+		</fieldset>
+				<fieldset>
+			Work Dissemination:
+			<textarea th:field="*{work_dissemination}" cols="30" rows="10" placeholder="optional"></textarea>
+			<p th:if="${#fields.hasErrors('work_dissemination')}"
+				th:errors="*{work_dissemination}"></p>
+		</fieldset>
+		<fieldset>
+			<input type="submit" value="Save" /> 
+			&nbsp; &nbsp; 
+			<input type="reset" value="Reset" />
+		</fieldset>
+
+	</form>
+
+</body>
+</html>

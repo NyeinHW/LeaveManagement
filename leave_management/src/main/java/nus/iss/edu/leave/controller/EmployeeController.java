@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import nus.iss.edu.leave.model.Employee;
 import nus.iss.edu.leave.model.LeaveApplication;
 import nus.iss.edu.leave.model.LeaveEntitlement;
@@ -71,9 +70,10 @@ public class EmployeeController {
 		if(employee != null)
 		{
 			if(emp.getPassword().equals(employee.getPassword())){
-				request.setAttribute("empid", employee.getId());
-				return "forward:/employee/applyLeave";
-				/* return "forward:/employee/leave_form/list"; */
+				System.out.println("id"+employee.getId());
+		        request.setAttribute("param1", employee.getId());
+
+				return "forward:/employee/leave_form/list"; 
 			}
 			else {
 				return "employee-login";
