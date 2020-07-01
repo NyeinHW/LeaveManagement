@@ -54,4 +54,86 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return erepo.findEmployeeByName(name);
 	}
 
+     @Override
+    public List<Employee> getAllEmployees()
+    {
+        List<Employee> result = (List<Employee>) erepo.findAll();
+       if (result.size() > 0) {             
+                  return result;
+        } 
+        else {
+            return new ArrayList<Employee>();
+        }
+    }
+    
+	@Override
+    public Employee getEmployeeById(int id) //throws RecordNotFoundException
+    {
+        Optional<Employee> employee = erepo.findById(id);
+         
+        if(employee.isPresent()) {
+            return employee.get();
+        } 
+        else return employee.get();
+        
+        //else {
+            //throw new RecordNotFoundException("No employee record exist for given id");
+        //}
+    }
+     @Override
+    public List<String> getAllManagerNames(List<Employee> emp){
+    	
+    	List<String> emp_manager = new ArrayList<>();
+    	for (Employee e : emp) {
+    		Employee m = e.getManager();
+    		if (m != null) emp_manager.add(m.getName());
+    		else emp_manager.add("-");
+    	}
+    	return emp_manager; 
+    }
+    
+	@Override
+    public Employee createOrUpdateEmployee(Employee entity) 
+    {
+    	System.out.println("createOrUpdateEmployee in service layer called");
+
+    	Optional<Employee> employee = erepo.findById(entity.getId());
+    	System.out.println(entity.getDoh());
+        
+    	if(!employee.isPresent())
+        {
+    		entity = erepo.save(entity);            
+            return entity;
+        } 
+        
+        //if you press edit button
+        else if(employee.isPresent()) 
+            {
+                Employee newEntity = employee.get();
+                newEntity.setEmail(entity.getEmail());
+                newEntity.setName(entity.getName());
+                newEntity.setUsername(entity.getUsername());
+                newEntity.setContact_no(entity.getContact_no());
+                newEntity.setDoh(entity.getDoh());
+                newEntity.setRole(entity.getRole());
+                newEntity.setPassword(entity.getPassword());
+                newEntity = erepo.save(newEntity);
+                 
+                return newEntity;
+            } 
+        return entity;
+    } 
+     @Override
+    public void deleteEmployeeById(int id) //throws RecordNotFoundException 
+    {
+        Optional<Employee> employee = erepo.findById(id);
+         
+        if(employee.isPresent()) 
+        {
+            erepo.deleteById(id);
+        } //else {
+           // throw new RecordNotFoundException("No employee record exist for given id");
+        //}
+    } 
+
 }
