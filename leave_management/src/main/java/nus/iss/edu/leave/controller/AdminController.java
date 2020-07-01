@@ -87,7 +87,7 @@ public class AdminController {
 	}
 	
 	 @RequestMapping(path = "/createEmployee", method = RequestMethod.POST)
-	    public String createOrUpdateEmployee(Employee employee, @RequestParam(name= "manager_id")
+	    public String createOrUpdateEmployee(@ModelAttribute("employee") @Valid Employee employee, @RequestParam(name= "manager_id")
 	 	Integer managerid ) 
 
 	    {
