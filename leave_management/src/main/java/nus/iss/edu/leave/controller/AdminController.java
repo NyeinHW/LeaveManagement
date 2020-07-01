@@ -18,14 +18,14 @@ import com.example.demo.error.RecordNotFoundException;
 import com.example.demo.model.Employee;
 import com.example.demo.model.Role;
 import com.example.demo.repo.EmployeeRepository;
-import com.example.demo.service.EmployeeService;
+import com.example.demo.service.EmployeeServiceImpl;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 	
 	@Autowired
-    EmployeeService service;
+    	EmployeeServiceImpl service;
 	@Autowired 
 	EmployeeRepository emprepo;
 	
