@@ -2,6 +2,9 @@ package nus.iss.edu.leave.service;
 
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,12 +16,16 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 
+import nus.iss.edu.leave.controller.LeaveApplicationValidator;
 import nus.iss.edu.leave.model.LeaveApplication;
 import nus.iss.edu.leave.model.LeaveBalance;
 import nus.iss.edu.leave.model.LeaveEntitlement;
 import nus.iss.edu.leave.model.LeaveType;
 import nus.iss.edu.leave.model.Role;
+import nus.iss.edu.leave.model.Status;
 import nus.iss.edu.leave.repo.LeaveApplicationRepository;
 import nus.iss.edu.leave.repo.LeaveBalanceRepository;
 import nus.iss.edu.leave.repo.LeaveEntitlementRepository;
@@ -34,7 +41,13 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 	
 	@Autowired
 	LeaveEntitlementRepository lerepo;
-
+	
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		binder.addValidators(new LeaveApplicationValidator());
+		
+	}
+	
 	@Override
 	public boolean leaveValidation(LeaveApplication leaveapp) {
 		
@@ -53,15 +66,20 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 		 * 
 		 * int leavebalance = leavebal.getBalance(); 
 		 */
+		System.out.println(leaveapp);
+		
 		Date startDate = leaveapp.getStart_date();
 		Date endDate = leaveapp.getEnd_date();
 		
-	
+		
 		if(endDate.before(startDate)){		
 			System.out.println("StartDate is before EndDate");
 			return false;
 		}
 		
+		if(isUnique(leaveapp.getEmployee().getId(),startDate,endDate)) {
+			return true;
+		}
 		/*
 		 * int duration = countDuration(startDate,endDate);
 		 * 
@@ -75,11 +93,46 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 		 * if(leavebalance < (duration - countNumWeekends(startDate,endDate)))
 		 * 
 		 * return false; }
-		 */
+		 */	
+		return false;
+	}
+	
+	@Override
+	public boolean isUnique(int id,Date startDate,Date endDate) {
+
+		List<LeaveApplication> leaveList = larepo.findLeaveApplicationsByEmployeeId(id);
+		
+		for (Iterator<LeaveApplication> iterator = leaveList.iterator(); iterator.hasNext();) {
+			LeaveApplication leaveApplication = (LeaveApplication) iterator.next();		
+			
+			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			System.out.println("Start Date: "+dateFormat.format(leaveApplication.getStart_date()));
+			System.out.println("End Date: " + dateFormat.format(leaveApplication.getEnd_date()));
+			
+			if(!(leaveApplication.getStatus().equals(Status.CANCELLED) ||
+					leaveApplication.getStatus().equals(Status.REJECTED)
+					)) {
+				
+				//leaveApplication.getEnd_date().equals(endDate)
+				
+				if(leaveApplication.getStart_date().equals(startDate)) {
+					System.out.println("Condition0");
+					return false;
+				}
+
+				else if(endDate.before(leaveApplication.getStart_date())){
+					System.out.println("Condition1");
+					return false;
+				}
+				else if(!(startDate.after(leaveApplication.getEnd_date()))){
+					System.out.println("Condition2");
+					return false;		
+				}
+			}		
+		}
+		System.out.println("Current Leave Application is unique!");	
 		return true;
 	}
-
-	// balance > duration > balance > duration-weekends-public_holiday > balance
 	
 	public int countNumWeekends(Date d1, Date d2) {
 
@@ -120,11 +173,11 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 
 	@Override
 	public LeaveApplication findLeaveApplicationById(Integer id) {
-		// TODO Auto-generated method stub
+		
 		return larepo.findById(id).get();
 	}
 
-	@Override
+	@Transactional
 	public void deleteLeaveApplication(LeaveApplication leaveApplication) {
 		 larepo.delete(leaveApplication);
 		
@@ -132,7 +185,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 
 	@Override
 	public ArrayList<LeaveApplication> findAllLeaveApplicationByEmployeeId(Integer id) {
-		// TODO Auto-generated method stub
+		
 		return (ArrayList<LeaveApplication>) larepo.findLeaveApplicationsByEmployeeId(id);	}
 
 }

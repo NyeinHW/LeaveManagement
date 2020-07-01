@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,9 +24,11 @@ public class LeaveApplication {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	private String reason;
+	@NotNull
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="dd-MM-yyyy")
-	private Date start_date; 
+	private Date start_date;
+	@NotNull
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private Date end_date;
