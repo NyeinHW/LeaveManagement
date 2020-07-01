@@ -14,13 +14,16 @@ public class Admin {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	
+	@NotEmpty
+	private String username; 
 	private String name;
 	@NotEmpty
 	@Length(min=8)
 	private String password;
 	@Email
 	private String email;
-	private Role role;
+	//private Role role;
 	public Admin() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -46,6 +49,14 @@ public class Admin {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
 	public String getPassword() {
 		return password;
 	}
