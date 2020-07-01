@@ -11,11 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import nus.iss.edu.leave.model.Employee;
 import nus.iss.edu.leave.model.LeaveApplication;
 import nus.iss.edu.leave.model.LeaveEntitlement;
@@ -44,6 +47,13 @@ public class EmployeeController {
 
 	@Autowired
 	protected LeaveApplicationService laservice;
+	
+	/*
+	 * @InitBinder protected void initBinder(WebDataBinder binder) {
+	 * binder.addValidators(new LeaveApplicationValidator());
+	 * 
+	 * }
+	 */
 
 	@Autowired
 	public void setLeaveApplicationService (LeaveApplicationServiceImpl laserviceim)
@@ -53,7 +63,7 @@ public class EmployeeController {
 
 	@Autowired
 	protected LeaveEntitlementRepository levEntRepo;
-
+	
 
 	@GetMapping(value = "/login")
 	public String loginPage(@ModelAttribute("employee") Employee emp) {
@@ -70,7 +80,7 @@ public class EmployeeController {
 		if(employee != null)
 		{
 			if(emp.getPassword().equals(employee.getPassword())){
-				System.out.println("id"+employee.getId());
+				
 				request.setAttribute("empid", employee.getId());
 
 				return "forward:/employee/leave_form/list"; 
@@ -104,17 +114,11 @@ public class EmployeeController {
 		List<LeaveEntitlement> leaveEntitlement = lerepo.findAll();
 		for (Iterator<LeaveEntitlement> iterator = leaveEntitlement.iterator(); iterator.hasNext();) {
 			LeaveEntitlement leaveentitle = (LeaveEntitlement) iterator.next();
-			System.out.println(leaveentitle);
-			if(leaveentitle.getRole() == la.getEmployee().getRole() && leaveentitle.getType()==la.getLeaveentitlement().getType())
+			if(leaveentitle.getRole() == la.getEmployee().getRole() && leaveentitle.getType()== la.getLeaveentitlement().getType())
 			{
 				leaveEntitlementResult = leaveentitle;
 			}
 		}
-
-		System.out.println(la);
-		System.out.println(la.getLeaveentitlement().getType());
-		System.out.println(la.getEmployee());
-		
 		
 		if(laservice.leaveValidation(la))
 		{
@@ -153,9 +157,5 @@ public class EmployeeController {
 		return "forward:/employee/leave_form/list";
 	}
 	
-	@RequestMapping(value = "/logout")
-	public String logout() {
-		return "index";
-	}
-		
 }
+		
