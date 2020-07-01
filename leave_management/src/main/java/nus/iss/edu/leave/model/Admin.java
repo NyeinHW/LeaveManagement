@@ -25,6 +25,11 @@ public class Admin {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Admin(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
 
 	public Admin(String name, @NotEmpty @Length(min = 8) String password, @Email String email, Role role) {
 		super();
