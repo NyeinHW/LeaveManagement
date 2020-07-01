@@ -10,13 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import nus.iss.edu.leave.model.LeaveEntitlement;
 import nus.iss.edu.leave.model.Role;
-import nus.iss.edu.leave.repo.LeaveEntitlementRepo;
+import nus.iss.edu.leave.repo.LeaveEntitlementRepository;
 
 @Service
 public class LeaveEntitementServiceImpl implements LeaveEntitlementService {
 	
 	@Autowired
-	LeaveEntitlementRepo leRepo;
+	LeaveEntitlementRepository leRepo;
 	
 	@Transactional
 	public boolean saveLeaveEntitlement(LeaveEntitlement leaveEntitlement) {

@@ -5,9 +5,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(name="leavebalance")
 public class LeaveBalance {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -16,7 +19,7 @@ public class LeaveBalance {
 	private Employee employee;
 	@ManyToOne
 	private LeaveEntitlement leaveentitlement;
-	@NotEmpty
+	@NotNull
 	private int balance;
 	
 	public LeaveBalance() {
@@ -52,6 +55,11 @@ public class LeaveBalance {
 	}
 	public void setBalance(int balance) {
 		this.balance = balance;
+	}
+	@Override
+	public String toString() {
+		return "LeaveBalance [id=" + id + ", employee=" + employee + ", leaveentitlement=" + leaveentitlement
+				+ ", balance=" + balance + "]";
 	}
 	
 }
