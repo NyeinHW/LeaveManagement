@@ -121,12 +121,12 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 	@Override
 	public LeaveApplication findLeaveApplicationById(Integer id) {
 		// TODO Auto-generated method stub
-		return null;
+		return larepo.findById(id).get();
 	}
 
 	@Override
 	public void deleteLeaveApplication(LeaveApplication leaveApplication) {
-		// TODO Auto-generated method stub
+		 larepo.delete(leaveApplication);
 		
 	}
 

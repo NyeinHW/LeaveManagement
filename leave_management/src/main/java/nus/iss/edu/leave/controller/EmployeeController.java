@@ -125,5 +125,29 @@ public class EmployeeController {
 		}
 		else return "leave-form";
 	}
+	@RequestMapping(value = "/leave-form/edit/{leave_app_id}")
+	public String updateLeave(Model model,@PathVariable("leave_app_id") Integer id) {
+		model.addAttribute("leaveapplication", laservice.findLeaveApplicationById(id));
+		return "update-leave-app";
+	}
+	@RequestMapping(value = "/leave-form/cancel/{leave_app_id}")
+	public String cancelLeave(Model model,@PathVariable("leave_app_id") Integer id,HttpServletRequest request) {
+		LeaveApplication la=laservice.findLeaveApplicationById(id);
+		System.out.println(la);
+		la.setStatus(Status.CANCELLED);
+		System.out.println("status is"+  la.getStatus());
+		request.setAttribute("empid", la.getEmployee().getId());
+		model.addAttribute("leaveapplication", laservice.findLeaveApplicationById(id));
+		return "forward:/employee/leave_form/list";
+	}
+	@RequestMapping(value = "/leave-form/delete/{leave_app_id}")
+	public String deleteLeave(Model model,@PathVariable("leave_app_id") Integer id,HttpServletRequest request) {
+		
+		LeaveApplication la=laservice.findLeaveApplicationById(id);
+		request.setAttribute("empid", la.getEmployee().getId());
+		System.out.println(la);
+		laservice.deleteLeaveApplication(la);
+		return "forward:/employee/leave_form/list";
+	}
 
 }

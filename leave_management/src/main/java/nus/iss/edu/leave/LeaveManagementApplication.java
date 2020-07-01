@@ -55,7 +55,7 @@ public class LeaveManagementApplication {
 		  LeaveEntitlement le5=new LeaveEntitlement(LeaveType.ANNUAL,Role.MANAGER,12);
 		  Employee e1=new Employee("nyein","123456789",1,"n@gmail.com","natogyi",Role.MANAGER,date,1);
 
-		  LeaveApplication la1=new LeaveApplication("not",date,date,Status.APPLIED,"hate","hello",e1,le5);
+		  LeaveApplication la1=new LeaveApplication("not",date,date,Status.UPDATED,"hate","hello",e1,le5);
 
 		  LeaveApplication la2=new LeaveApplication("hello",date,date,Status.APPROVED,"ok","hello",e1,le5);
 		  LeaveApplication la3=new LeaveApplication("hello",date,date,Status.REJECTED,"ok","hello",e1,le5);
