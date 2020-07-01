@@ -19,23 +19,45 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Employee {
+	@Entity
+@Table(name="employees")
+public class Employee {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-	@NotEmpty
-	private String name;
-	@NotEmpty
-	@Length(min=8)
-	private String password;
+	@Column(name = "emp_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public int Id; 
+	
+	@Column(name = "username")
+	public String username; 
+	
+	@Column(length=64)
+	public String name; 
+	
+	@Length(min=8) 
+	private String password; 
+	
 	private int contact_no;
-	@Email
-	private String email;
-	private String address;
+	  
+	@Email 
+	private String email; 
+	
+	private String address; 
+	
+	@Enumerated(EnumType.STRING)
 	private Role role;
+
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern="dd-MM-yyyy")
+	@DateTimeFormat(pattern= "dd-MM-yyyy")  
 	private Date doh;
-	private int manager_id;
+	
+	@ManyToOne
+	@JoinColumn(name = "manager_id", nullable=true)
+	public Employee manager; 
+	
+	@OneToMany(mappedBy = "manager", cascade = CascadeType.ALL)
+	public Set<Employee> subordinates = new HashSet<>();
+	
+	//Leave Application things
 	@OneToMany(mappedBy="employee")
 	private List<LeaveApplication> leaveapplication;
 	@OneToMany(mappedBy="employee")
