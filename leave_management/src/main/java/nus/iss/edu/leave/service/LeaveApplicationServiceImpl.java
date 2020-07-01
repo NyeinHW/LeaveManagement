@@ -2,6 +2,7 @@ package nus.iss.edu.leave.service;
 
 
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -84,5 +85,27 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 		larepo.save(leaveapp);
 
 	}
+
+	@Override
+	public ArrayList<LeaveApplication> findAllLeaveApplications() {
+		return (ArrayList<LeaveApplication>) larepo.findAll();
+	}
+
+	@Override
+	public LeaveApplication findLeaveApplicationById(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteLeaveApplication(LeaveApplication leaveApplication) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<LeaveApplication> findAllLeaveApplicationByEmployeeId(Integer id) {
+		// TODO Auto-generated method stub
+		return (ArrayList<LeaveApplication>) larepo.findLeaveApplicationsByEmployeeId(id);	}
 
 }

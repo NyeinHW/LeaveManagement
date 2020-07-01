@@ -9,12 +9,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
+@Table(name ="leaveapplication")
 public class LeaveApplication {
 	
 	@Id
@@ -48,6 +50,19 @@ public class LeaveApplication {
 	}
 	
 	
+	
+	public LeaveApplication(String reason, Date start_date, Date end_date, Status status, String manager_cmt,
+			String work_dissemination, Employee employee, LeaveEntitlement leaveentitlement) {
+		super();
+		this.reason = reason;
+		this.start_date = start_date;
+		this.end_date = end_date;
+		this.status = status;
+		this.manager_cmt = manager_cmt;
+		this.work_dissemination = work_dissemination;
+		this.employee = employee;
+		this.leaveentitlement = leaveentitlement;
+	}
 	public int getId() {
 		return id;
 	}

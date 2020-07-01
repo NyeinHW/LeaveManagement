@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Department Listing</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/style.css}" />
+<!--  <th:block th:include="~{layout/header}"></th:block> -->
+</head>
+<body>
+	<!--  <header th:insert="fragments/general.html :: header"> </header>
+	<div th:replace="fragments/general.html :: menu"></div>   -->
+	<!-- Add Hyperlink -->
+	<a href="" th:href="@{/employee/applyLeave}">Add New Leave Application</a>
+
+	<h2 th:if="${not #lists.isEmpty(leaveApplications)}">Leave applications List</h2>
+	<table th:if="${not #lists.isEmpty(leaveApplications)}" >
+		<tr >
+			<th >Start Date</th>
+			<th >End Date</th>
+			<th >Leave Type</th>
+			<th >Reason</th>
+			<th >Status</th>
+			<th >Manage Comment</th>
+			<th >Edit Leave Application</th>
+			<th >Delete Leave Application</th>
+		</tr>
+		<tr th:each="leaveApplication:${leaveApplications}" class="table-row">
+			<td th:text="${leaveApplication.start_date}">Start Date</td>
+			<td th:text=${leaveApplication.end_date}>End Date</td>
+			<td th:text=${leaveApplication.leaveentitlement.type}>Type</td>
+			<td th:text=${leaveApplication.reason}>Reason</td>
+			<td th:text=${leaveApplication.status}>Status</td>
+			<td th:text=${leaveApplication.manager_cmt}>Manager Comment</td>
+			<td><a th:if="${leaveApplication.status != T(nus.iss.edu.leave.model.Status).APPROVED and leaveApplication.status != T(nus.iss.edu.leave.model.Status).REJECTED}"
+			 href="EditLeaveApplication.html" 
+							th:href="@{/leave-form/edit/}+${leaveApplication.id}">Edit</a></td>
+			<td><a th:if="${leaveApplication.status != T(nus.iss.edu.leave.model.Status).APPROVED and leaveApplication.status != T(nus.iss.edu.leave.model.Status).REJECTED}"
+			 href="DeleteMember.html"
+				th:href="@{/leave-form/delete/}+${leaveApplication.id}">Delete</a></td>
+		</tr>
+	</table>
+    <br/>
+	<div th:replace="fragments/general.html :: footer"></div>
+</body>
+
+</html>

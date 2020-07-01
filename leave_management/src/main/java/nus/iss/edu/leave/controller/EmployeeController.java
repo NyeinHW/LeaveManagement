@@ -2,6 +2,7 @@ package nus.iss.edu.leave.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import nus.iss.edu.leave.model.Employee;
 import nus.iss.edu.leave.model.LeaveApplication;
-import nus.iss.edu.leave.repo.LeaveEntitlementRepo;
+import nus.iss.edu.leave.repo.LeaveEntitlementRepository;
 import nus.iss.edu.leave.service.EmployeeService;
 import nus.iss.edu.leave.service.EmployeeServiceImpl;
 import nus.iss.edu.leave.service.LeaveApplicationService;
@@ -45,7 +46,7 @@ public class EmployeeController {
 	}
 	
 	@Autowired
-	protected LeaveEntitlementRepo levEntRepo;
+	protected LeaveEntitlementRepository levEntRepo;
 	
 
 	@GetMapping(value = "/login")
@@ -54,7 +55,7 @@ public class EmployeeController {
 	}
 
 	@RequestMapping(value = "/submit")
-	public String loginPage(@ModelAttribute ("employee") @Valid Employee emp, BindingResult result, Model model) {
+	public String loginPage(@ModelAttribute ("employee") @Valid Employee emp, BindingResult result, Model model,HttpServletRequest request) {
 
 		if (result.hasErrors())
 			return "employee-login";
@@ -70,8 +71,10 @@ public class EmployeeController {
 			System.out.println(employee.getPassword());
 			
 			if(emp.getPassword().equals(employee.getPassword())){
-				System.out.println("Logged IN");
-				return "forward:/employee/applyLeave2"; 
+				System.out.println("id"+employee.getId());
+		        request.setAttribute("param1", employee.getId());
+
+				return "forward:/employee/leave_form/list"; 
 			}
 			else {
 				System.out.println("employee == null");
