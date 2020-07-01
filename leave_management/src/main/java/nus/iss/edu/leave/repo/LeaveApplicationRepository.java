@@ -9,6 +9,6 @@ import org.springframework.data.repository.query.Param;
 import nus.iss.edu.leave.model.LeaveApplication;
 
 public interface LeaveApplicationRepository extends JpaRepository<LeaveApplication, Integer> {
-	@Query(value="Select * from LeaveApplication l where l.employee_id = :id",nativeQuery=true)
+	@Query(value="Select * from LeaveApplication l where l.employee_id = :id and Year(l.start_date) = 2020",nativeQuery=true)
 	  List<LeaveApplication> findLeaveApplicationsByEmployeeId(@Param("id") int id);
 }

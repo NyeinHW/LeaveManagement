@@ -7,6 +7,8 @@
 	href="../../css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
+	<header th:insert="fragments/employee-general.html :: header"> </header>
+
 <h1> Apply Leave</h1>
 <form action='#' th:object="${leaveapplication}" th:action="@{/employee/submitLeave}" method="post">
 		<fieldset>
@@ -60,8 +62,15 @@
 			<input type="submit" value="Save" /> 
 			&nbsp; &nbsp; 
 			<input type="reset" value="Reset" />
+			
 		</fieldset>
 	</form>
-
+	<input type="button" onclick="goBack()" value="Cancel"/>
+	
+	<script>
+	function goBack() {
+	  window.history.back();
+	}
+	</script>
 </body>
 </html>
