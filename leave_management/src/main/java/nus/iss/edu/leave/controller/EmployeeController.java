@@ -71,7 +71,7 @@ public class EmployeeController {
 		{
 			if(emp.getPassword().equals(employee.getPassword())){
 				System.out.println("id"+employee.getId());
-		        request.setAttribute("param1", employee.getId());
+		        request.setAttribute("empid", employee.getId());
 
 				return "forward:/employee/leave_form/list"; 
 			}
@@ -83,15 +83,16 @@ public class EmployeeController {
 		return "employee-login";
 	}
 
-	@RequestMapping(value = "/applyLeave") 
-	public String applyLeave (@ModelAttribute("leaveapplication") LeaveApplication la,HttpServletRequest request ) {
-		int empid = (int)request.getAttribute("empid");
-		la.setEmployee(empservice.findEmployeeById(empid));
+	@RequestMapping(value = "/applyLeave/{empid}") 
+	public String applyLeave (@PathVariable ("empid") Integer id,  @ModelAttribute("leaveapplication") LeaveApplication la) {
+		int empid = (Integer) id;
+		
+		la.setEmployee(empservice.findEmployeeById(id));
 		return "leave-form"; 
 	}
 	
 	@RequestMapping(value = "/submitLeave")
-	public String submitLeave (@ModelAttribute ("leaveapplication") @Valid LeaveApplication la, BindingResult bindingResult, Model model){
+	public String submitLeave (@ModelAttribute ("leaveapplication") @Valid LeaveApplication la, BindingResult bindingResult, Model model, HttpServletRequest request){
 		if (bindingResult.hasErrors()) {
 			return "leave-form";
 		}
@@ -119,7 +120,8 @@ public class EmployeeController {
 			la.setStatus(Status.APPLIED);
 			la.setLeaveentitlement(leaveEntitlementResult);
 			laservice.addLeaveApplication(la);
-			return "forward:/employee-leavelist";
+			request.setAttribute("empid", emp.getId());
+			return "forward:/employee/leave_form/list";
 		}
 		else return "leave-form";
 	}

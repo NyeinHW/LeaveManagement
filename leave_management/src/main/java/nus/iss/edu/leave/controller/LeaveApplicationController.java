@@ -28,10 +28,12 @@ public class LeaveApplicationController {
 	
 	@RequestMapping(value = "/list")
 	public String listByEmpId(Model model,HttpServletRequest request) {
-        int param1 = (Integer) request.getAttribute("param1");
-		System.out.println("id is"+param1);
-		model.addAttribute("leaveApplications", lservice.findAllLeaveApplicationByEmployeeId(param1));
+        int empid = (Integer) request.getAttribute("empid");
+		System.out.println("id is"+empid);
+		model.addAttribute("leaveApplications", lservice.findAllLeaveApplicationByEmployeeId(empid));
 		model.addAttribute("status",Status.values());
+		model.addAttribute("empid",empid);
+		
 		return "leave-applications";
 	}
     

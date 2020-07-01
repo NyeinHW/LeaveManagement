@@ -11,8 +11,8 @@
 	<!--  <header th:insert="fragments/general.html :: header"> </header>
 	<div th:replace="fragments/general.html :: menu"></div>   -->
 	<!-- Add Hyperlink -->
-	<a href="" th:href="@{/employee/applyLeave}">Add New Leave Application</a>
-
+	<a href="" th:href="@{/employee/applyLeave/}+${empid}">Add New Leave Application</a>
+	
 	<h2 th:if="${not #lists.isEmpty(leaveApplications)}">Leave applications List</h2>
 	<table th:if="${not #lists.isEmpty(leaveApplications)}" >
 		<tr >
@@ -26,8 +26,8 @@
 			<th >Delete Leave Application</th>
 		</tr>
 		<tr th:each="leaveApplication:${leaveApplications}" class="table-row">
-			<td th:text="${leaveApplication.start_date}">Start Date</td>
-			<td th:text=${leaveApplication.end_date}>End Date</td>
+			<td th:text="${#dates.format(leaveApplication.start_date, 'dd-MM-yyyy')}">Start Date</td>
+			<td th:text="${#dates.format(leaveApplication.end_date, 'dd-MM-yyyy')}">End Date</td>
 			<td th:text=${leaveApplication.leaveentitlement.type}>Type</td>
 			<td th:text=${leaveApplication.reason}>Reason</td>
 			<td th:text=${leaveApplication.status}>Status</td>

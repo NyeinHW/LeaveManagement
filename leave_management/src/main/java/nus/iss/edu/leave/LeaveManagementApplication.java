@@ -28,8 +28,6 @@ import nus.iss.edu.leave.repo.LeaveBalanceRepository;
 import nus.iss.edu.leave.repo.LeaveEntitlementRepository;
 
 
-
-
 @SpringBootApplication
 public class LeaveManagementApplication {
 	
@@ -51,51 +49,51 @@ public class LeaveManagementApplication {
 	
 	  @Bean public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 	  return args ->{
-	  
+
 		  long millis=System.currentTimeMillis();  
-			java.util.Date date=new java.util.Date(millis);  
-				LeaveEntitlement le5=new LeaveEntitlement(LeaveType.ANNUAL,Role.MANAGER,12);
-				Employee e1=new Employee("nyein","123456789",1,"n@gmail.com","natogyi",Role.MANAGER,date,1);
-				
-			    LeaveApplication la1=new LeaveApplication("not",date,date,Status.APPLIED,"hate","hello",e1,le5);
-			    
-			    LeaveApplication la2=new LeaveApplication("hello",date,date,Status.APPROVED,"ok","hello",e1,le5);
-			    LeaveApplication la3=new LeaveApplication("hello",date,date,Status.REJECTED,"ok","hello",e1,le5);
+		  java.util.Date date=new java.util.Date(millis);  
+		  LeaveEntitlement le5=new LeaveEntitlement(LeaveType.ANNUAL,Role.MANAGER,12);
+		  Employee e1=new Employee("nyein","123456789",1,"n@gmail.com","natogyi",Role.MANAGER,date,1);
 
-			    erepo.save(e1);
-			    lerepo.save(le1);
-			    lrepo.save(la1);
-			    lrepo.save(la2);
-			    lrepo.save(la3);
+		  LeaveApplication la1=new LeaveApplication("not",date,date,Status.APPLIED,"hate","hello",e1,le5);
 
-	  Employee e2 = new Employee(); 
-	  e2.setAddress("aaaa");
-	  e2.setContact_no(95185999);	  
-	  e2.setName("sam");
-	  e2.setPassword("1235679800"); 
-	  e2.setEmail("acbc@gmail.com");
-	  e2.setRole(Role.MANAGER);
-	  e2.setManager_id(1);
-	  erepo.save(e2);
-	  
-	  LeaveEntitlement le1 = new LeaveEntitlement();
-	  LeaveEntitlement le2 = new LeaveEntitlement();
-	  
-	  le1.setLeave_count(18);
-	  le1.setRole(Role.MANAGER);
-	  le1.setType(LeaveType.ANNUAL);
-	  
-	  le2.setLeave_count(60);
-	  le2.setRole(Role.MANAGER);
-	  le2.setType(LeaveType.MEDICAL);
-	  
-	  lerepo.save(le1); lerepo.save(le2);
-	  
-	  LeaveBalance lb1 = new LeaveBalance(1,e2,le1,10);
-	  LeaveBalance lb2 = new LeaveBalance(2,e2,le2,10);
-	  
-	  
-	  lbrepo.save(lb1); lbrepo.save(lb2);
+		  LeaveApplication la2=new LeaveApplication("hello",date,date,Status.APPROVED,"ok","hello",e1,le5);
+		  LeaveApplication la3=new LeaveApplication("hello",date,date,Status.REJECTED,"ok","hello",e1,le5);
+
+		  erepo.save(e1);
+		  lerepo.save(le5);
+		  lrepo.save(la1);
+		  lrepo.save(la2);
+		  lrepo.save(la3);
+
+		  Employee e2 = new Employee(); 
+		  e2.setAddress("aaaa");
+		  e2.setContact_no(95185999);	  
+		  e2.setName("sam");
+		  e2.setPassword("1235679800"); 
+		  e2.setEmail("acbc@gmail.com");
+		  e2.setRole(Role.MANAGER);
+		  e2.setManager_id(1);
+		  erepo.save(e2);
+
+		  LeaveEntitlement le1 = new LeaveEntitlement();
+		  LeaveEntitlement le2 = new LeaveEntitlement();
+
+		  le1.setLeave_count(18);
+		  le1.setRole(Role.MANAGER);
+		  le1.setType(LeaveType.ANNUAL);
+
+		  le2.setLeave_count(60);
+		  le2.setRole(Role.MANAGER);
+		  le2.setType(LeaveType.MEDICAL);
+
+		  lerepo.save(le1); lerepo.save(le2);
+
+		  LeaveBalance lb1 = new LeaveBalance(1,e2,le1,10);
+		  LeaveBalance lb2 = new LeaveBalance(2,e2,le2,10);
+
+
+		  lbrepo.save(lb1); lbrepo.save(lb2);
 	  
 	  };
 	  
