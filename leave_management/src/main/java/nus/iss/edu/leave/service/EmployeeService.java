@@ -10,4 +10,8 @@ public interface EmployeeService {
 	public ArrayList<String> findAllEmployeeNames(String name);
 	public Employee findEmployeeById(Integer id);
 	public Employee findEmployeeByName(String name);
+	
+	public void deleteEmployeeById(int id); 
+	public Employee createOrUpdateEmployee(Employee entity); 
+	public List<String> getAllManagerNames(List<Employee> emp);
 }
