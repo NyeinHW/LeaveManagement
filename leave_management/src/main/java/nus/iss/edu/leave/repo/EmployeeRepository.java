@@ -1,6 +1,7 @@
 package nus.iss.edu.leave.repo;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,4 +15,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 	Employee findEmployeeByName(String name);
 	
 	List<Employee> findByRole(Role role);
+	
+	Optional<Employee> findByUsername(String Username);
 }

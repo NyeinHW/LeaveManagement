@@ -36,8 +36,7 @@ public class LeaveManagementApplication {
 	@Autowired
 	private LeaveApplicationRepository lrepo;
 	@Autowired
-	LeaveEntitlementRepository lerepo;
-	
+	LeaveEntitlementRepository lerepo;	
 	@Autowired
 	LeaveBalanceRepository lbrepo;
 	
@@ -53,9 +52,9 @@ public class LeaveManagementApplication {
 		  long millis=System.currentTimeMillis();  
 		  java.util.Date date=new java.util.Date(millis);  
 		  LeaveEntitlement le5=new LeaveEntitlement(LeaveType.ANNUAL,Role.MANAGER,12);
-		  Employee e1=new Employee("nyein","123456789",1,"n@gmail.com","natogyi",Role.MANAGER,date,1);
+		  Employee e1=new Employee("John","123456789", "john-sales", 1,"john_sales@gmail.com","Sunset Avenue",Role.MANAGER,date);
 
-		  LeaveApplication la1=new LeaveApplication("not",date,date,Status.UPDATED,"hate","hello",e1,le5);
+		  LeaveApplication la1=new LeaveApplication("not",date,date,Status.UPDATED,"not sure","hello",e1,le5);
 
 		  LeaveApplication la2=new LeaveApplication("hello",date,date,Status.APPROVED,"ok","hello",e1,le5);
 		  LeaveApplication la3=new LeaveApplication("hello",date,date,Status.REJECTED,"ok","hello",e1,le5);
@@ -67,13 +66,14 @@ public class LeaveManagementApplication {
 		  lrepo.save(la3);
 
 		  Employee e2 = new Employee(); 
-		  e2.setAddress("aaaa");
+		  e2.setAddress("Brick Lane");
+		  e2.setUsername("sam-sales");
 		  e2.setContact_no(95185999);	  
 		  e2.setName("sam");
 		  e2.setPassword("1235679800"); 
 		  e2.setEmail("acbc@gmail.com");
 		  e2.setRole(Role.MANAGER);
-		  e2.setManager_id(1);
+		  e2.setManager(e1);
 		  erepo.save(e2);
 
 		  LeaveEntitlement le1 = new LeaveEntitlement();
@@ -94,7 +94,9 @@ public class LeaveManagementApplication {
 
 
 		  lbrepo.save(lb1); lbrepo.save(lb2);
-	  
+		  
+		  Employee e3 = new Employee("Dorothy", "Passw1234", "admin-doro", 92743748, "dorothy-admin@gmail.com", "Lucky Avenue", Role.ADMIN, date);
+		  erepo.save(e3);
 	  };
 	  
 	  }

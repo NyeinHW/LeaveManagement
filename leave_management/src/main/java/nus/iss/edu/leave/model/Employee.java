@@ -25,9 +25,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Employee {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private int id;	
 	@NotEmpty
-	private String name;
+	private String name;	
+	@NotEmpty
+	private String username;	
 	@NotEmpty
 	@Length(min=8)
 	private String password;
@@ -56,9 +58,10 @@ public class Employee {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Employee(@NotEmpty String name, @NotEmpty @Length(min = 8) String password, int contact_no,
+	public Employee(@NotEmpty String name, @NotEmpty @Length(min = 8) String password, @NotEmpty String username, int contact_no,
 			@Email String email, String address, Role role, Date doh/*, Employee manager*/) {
 		this.name = name;
+		this.username = username;
 		this.password = password;
 		this.contact_no = contact_no;
 		this.email = email;
@@ -68,11 +71,12 @@ public class Employee {
 		//this.manager = manager;
 	}
 	
-	public Employee(@NotEmpty String name, @NotEmpty @Length(min = 8) String password, int contact_no,
+	public Employee(@NotEmpty String name, @NotEmpty @Length(min = 8) String password, @NotEmpty String username, int contact_no,
 			@Email String email, String address, Role role, Date doh, int manager_id, LeaveApplication leaveapplication,
 			LeaveBalance leavebalance) {
 		super();
 		this.name = name;
+		this.username = username;
 		this.password = password;
 		this.contact_no = contact_no;
 		this.email = email;
@@ -145,6 +149,14 @@ public class Employee {
 
 	public void setManager(Employee manager) {
 		this.manager = manager;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 	public LeaveApplication getLeaveapplication() {

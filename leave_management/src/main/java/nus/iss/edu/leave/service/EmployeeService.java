@@ -1,6 +1,8 @@
 package nus.iss.edu.leave.service;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import nus.iss.edu.leave.model.Employee;
 
 public interface EmployeeService {

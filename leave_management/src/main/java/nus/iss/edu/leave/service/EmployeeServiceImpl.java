@@ -3,6 +3,7 @@ package nus.iss.edu.leave.service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,7 +55,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return erepo.findEmployeeByName(name);
 	}
 	
-	 @Override
+	  @Override
 	    public List<String> getAllManagerNames(List<Employee> emp){
 	    	
 	    	List<String> emp_manager = new ArrayList<>();

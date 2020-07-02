@@ -17,11 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import nus.iss.edu.leave.model.Admin;
+//import nus.iss.edu.leave.model.Admin;
 //import com.example.demo.error.RecordNotFoundException;
 import nus.iss.edu.leave.model.Employee;
+import nus.iss.edu.leave.model.LeaveType;
 import nus.iss.edu.leave.model.Role;
-import nus.iss.edu.leave.repo.AdminRepository;
+//import nus.iss.edu.leave.repo.AdminRepository;
 import nus.iss.edu.leave.repo.EmployeeRepository;
 import nus.iss.edu.leave.service.EmployeeService;
 import nus.iss.edu.leave.service.EmployeeServiceImpl;
@@ -42,30 +43,29 @@ public class AdminController {
 	@Autowired 
 	EmployeeRepository emprepo;
 	
-	@Autowired
-	AdminRepository arepo;
-
 	@GetMapping(value = "/login")
-	public String loginPage(@ModelAttribute("admin") Admin admin) {
+	public String loginPage(Model model) {
+		model.addAttribute("employee", new Employee());
 		return "admin-login";
 	}
 
 	@PostMapping(value = "/login")
-	public String login(@ModelAttribute ("admin") @Valid Admin admin, BindingResult result, Model model) {
+	public String login(@ModelAttribute ("employee") @Valid Employee employee, Model model) {
 
-		if (result.hasErrors()) {
-			return "admin-login";
-		}
+		System.out.print("test");
 		
-		Optional<Admin> a = arepo.findByUsername(admin.getUsername());		
-		if(a != null)
+		Optional<Employee> e = emprepo.findByUsername(employee.getUsername());
+		Role r = e.get().getRole();
+		String usern = e.get().getUsername();
+		System.out.print(usern + "   " + r);
+			
+		if(e.isPresent() && e.get().getRole() == Role.ADMIN )
 		{
-			if(a.get().getPassword().equals(admin.getPassword())){
+			if(e.get().getPassword().equals(employee.getPassword())){
 				return "admin-home"; 
 			}
 			else return "admin-login";
 		}
-		//include error page.
 		return "admin-login";
 	}
 	
@@ -92,6 +92,7 @@ public class AdminController {
 
 	    {
 	        Employee manager = emprepo.findById(managerid).orElse(new Employee());
+	        System.out.print(employee.getDoh());
 	        if(managerid != 0) employee.setManager(manager);
 	        else employee.setManager(null);
 	        empservice.createOrUpdateEmployee(employee);
@@ -117,6 +118,18 @@ public class AdminController {
 	  @RequestMapping(path="/delete/{id}")
 	  public String deleteEmployeeById(@PathVariable("id") int id) {
 		  empservice.deleteEmployeeById(id);
+		  return "redirect:/admin/viewemployees";
+	  }
+	  
+	  @RequestMapping("/manage-leavetype")
+	  public String manageLeaveType(Model model) {		  		  
+		  //model.addAttribute("leavetype", leavetype);
+		  return "manage-leave-type";
+	  }
+	  
+	  @PostMapping("/manage-leavetype")
+	  public String submitLeaveType(@RequestParam("newleavetype") String newleave, LeaveType leavetype) {
+		  
 		  return "redirect:/admin/viewemployees";
 	  }
 	
