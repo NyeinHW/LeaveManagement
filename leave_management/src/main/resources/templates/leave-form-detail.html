@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Leave Application Form</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h1>Your's Leave</h1>
+
+<table>
+
+<tr >
+			<th >Start Date</th>
+			<th >End Date</th>
+			<th >Leave Type</th>
+			<th >Reason</th>
+			<th >Status</th>
+<!-- 			<th >Manage Comment</th> -->
+			<th >Work Dissemination</th>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+
+<tr th:object="${leaveapplication}" class="table-row">
+	<td th:object="${leaveapplication}" th:text="${#dates.format(leaveapplication.start_date, 'dd-MM-yyyy')}">Start Date</td>
+	<td th:text="${#dates.format(leaveapplication.end_date, 'dd-MM-yyyy')}">End Date</td>
+	<td th:text=${leaveapplication.leaveentitlement.type}>Type</td>
+	<td th:text=${leaveapplication.reason}>Reason</td>
+	<td th:text=${leaveapplication.status}>Status</td>
+	<td th:text="${leaveapplication.work_dissemination}">Work Dissemination</td>
+	<td><a th:if="${leaveapplication.status != T(nus.iss.edu.leave.model.Status).APPROVED and leaveapplication.status != T(nus.iss.edu.leave.model.Status).REJECTED and leaveapplication.status != T(nus.iss.edu.leave.model.Status).CANCELLED}"
+			href="EditLeaveApplication.html" 
+			th:href="@{/employee/leave-form/edit/}+${leaveapplication.id}">Update</a></td>
+	 <td><a th:if="${leaveapplication.status == T(nus.iss.edu.leave.model.Status).APPROVED}"
+	 		href="CancelLeaveApplication.html" 
+			th:href="@{/employee/leave-form/cancel/}+${leaveapplication.id}">Cancel</a></td>
+	<td><a th:if="${leaveapplication.status != T(nus.iss.edu.leave.model.Status).APPROVED and leaveapplication.status != T(nus.iss.edu.leave.model.Status).REJECTED and leaveapplication.status != T(nus.iss.edu.leave.model.Status).CANCELLED} "
+	 		href="DeleteMember.html"
+			th:href="@{/employee/leave-form/delete/}+${leaveapplication.id}">Delete</a></td>
+
+</tr>
+</table>
+</body>
+</html>
