@@ -47,7 +47,8 @@ public class LeaveManagementApplication {
 	}
 	
 	
-	  @Bean public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+	  @Bean 
+	  public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 	  return args ->{
 
 		  long millis=System.currentTimeMillis();  
