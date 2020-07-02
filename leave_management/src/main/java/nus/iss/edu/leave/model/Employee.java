@@ -4,9 +4,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,9 +25,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Employee {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private int id;	
 	@NotEmpty
-	private String name;
+	private String name;	
+	@NotEmpty
+	private String username;	
 	@NotEmpty
 	@Length(min=8)
 	private String password;
@@ -31,46 +37,57 @@ public class Employee {
 	@Email
 	private String email;
 	private String address;
+	@Enumerated(EnumType.STRING)
 	private Role role;
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private Date doh;
-	private int manager_id;
+	//private int manager_id;
+	
+	@ManyToOne
+	@JoinColumn(name = "manager_id", nullable=true)
+	public Employee manager; 
+	
 	@OneToMany(mappedBy="employee")
 	private List<LeaveApplication> leaveapplication;
 	@OneToMany(mappedBy="employee")
 	private List<LeaveBalance> leavebalance;
+	
 	public Employee() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Employee(@NotEmpty String name, @NotEmpty @Length(min = 8) String password, int contact_no,
-			@Email String email, String address, Role role, Date doh, int manager_id) {
-		super();
+	
+	public Employee(@NotEmpty String name, @NotEmpty @Length(min = 8) String password, @NotEmpty String username, int contact_no,
+			@Email String email, String address, Role role, Date doh/*, Employee manager*/) {
 		this.name = name;
+		this.username = username;
 		this.password = password;
 		this.contact_no = contact_no;
 		this.email = email;
 		this.address = address;
 		this.role = role;
 		this.doh = doh;
-		this.manager_id = manager_id;
+		//this.manager = manager;
 	}
-	public Employee(@NotEmpty String name, @NotEmpty @Length(min = 8) String password, int contact_no,
+	
+	public Employee(@NotEmpty String name, @NotEmpty @Length(min = 8) String password, @NotEmpty String username, int contact_no,
 			@Email String email, String address, Role role, Date doh, int manager_id, LeaveApplication leaveapplication,
 			LeaveBalance leavebalance) {
 		super();
 		this.name = name;
+		this.username = username;
 		this.password = password;
 		this.contact_no = contact_no;
 		this.email = email;
 		this.address = address;
 		this.role = role;
 		this.doh = doh;
-		this.manager_id = manager_id;
+		//this.manager_id = manager_id;
 		this.leaveapplication = (List<LeaveApplication>) leaveapplication;
 		this.leavebalance = (List<LeaveBalance>) leavebalance;
 	}
+
 	public int getId() {
 		return id;
 	}
@@ -119,12 +136,29 @@ public class Employee {
 	public void setDoh(Date doh) {
 		this.doh = doh;
 	}
-	public int getManager_id() {
-		return manager_id;
+//	public int getManager_id() {
+//		return manager_id;
+//	}
+//	public void setManager_id(int manager_id) {
+//		this.manager_id = manager_id;
+//	}
+	
+	public Employee getManager() {
+		return manager;
 	}
-	public void setManager_id(int manager_id) {
-		this.manager_id = manager_id;
+
+	public void setManager(Employee manager) {
+		this.manager = manager;
 	}
+	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
 	public LeaveApplication getLeaveapplication() {
 		return (LeaveApplication) leaveapplication;
 	}
