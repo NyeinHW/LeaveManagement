@@ -22,17 +22,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import nus.iss.edu.leave.model.Employee;
 import nus.iss.edu.leave.model.LeaveApplication;
 import nus.iss.edu.leave.model.LeaveEntitlement;
+import nus.iss.edu.leave.model.LeaveType;
 import nus.iss.edu.leave.model.Status;
 import nus.iss.edu.leave.repo.LeaveEntitlementRepository;
 import nus.iss.edu.leave.service.EmployeeService;
 import nus.iss.edu.leave.service.EmployeeServiceImpl;
 import nus.iss.edu.leave.service.LeaveApplicationService;
 import nus.iss.edu.leave.service.LeaveApplicationServiceImpl;
+import nus.iss.edu.leave.service.LeaveTypeService;
+import nus.iss.edu.leave.service.LeaveTypeServiceImpl;
 
 @Controller
 @RequestMapping(value = "/employee")
 public class EmployeeController {
-
+	
 	@Autowired
 	protected LeaveEntitlementRepository lerepo;
 
@@ -55,7 +58,11 @@ public class EmployeeController {
 	}
 
 	@Autowired
-	protected LeaveEntitlementRepository levEntRepo;
+	public LeaveTypeService ltservice;
+	
+	public void setLeaveTypeService (LeaveTypeServiceImpl ltserviceimp) {
+		this.ltservice = ltserviceimp;
+	}
 	
 	@GetMapping(value = "/loginpage")
 	public String loginPage(@ModelAttribute("employee") Employee emp) {
@@ -86,10 +93,13 @@ public class EmployeeController {
 	}
 
 	@RequestMapping(value = "/applyLeave/{empid}") 
-	public String applyLeave (@PathVariable ("empid") Integer id,  @ModelAttribute("leaveapplication") LeaveApplication la) {
+	public String applyLeave (@PathVariable ("empid") Integer id,  @ModelAttribute("leaveapplication") LeaveApplication la,Model model) {
 		int empid = (Integer) id;
 		la.setStatus(Status.APPLIED);
 		la.setEmployee(empservice.findEmployeeById(id));
+		ArrayList<LeaveType> leaveTypes = ltservice.findAllLeaveType();
+		model.addAttribute("ltypes", leaveTypes);
+		
 		return "leave-form"; 
 	}
 	

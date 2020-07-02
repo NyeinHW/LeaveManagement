@@ -14,6 +14,6 @@ public interface LeaveApplicationService {
 	public LeaveApplication findLeaveApplicationById(Integer id);
 	public void deleteLeaveApplication(LeaveApplication leaveApplication);
 	public ArrayList<LeaveApplication> findAllLeaveApplicationByEmployeeId(Integer id);
-	public boolean isUnique(int id,Date startDate,Date endDate);
+	public boolean isUnique(int id,Date startDate,Date endDate,String type);
 	
 }

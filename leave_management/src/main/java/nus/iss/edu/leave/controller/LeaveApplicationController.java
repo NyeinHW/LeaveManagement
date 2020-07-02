@@ -1,6 +1,7 @@
 package nus.iss.edu.leave.controller;
 
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,12 +21,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import nus.iss.edu.leave.model.Employee;
 import nus.iss.edu.leave.model.LeaveApplication;
 import nus.iss.edu.leave.model.LeaveEntitlement;
+import nus.iss.edu.leave.model.LeaveType;
 import nus.iss.edu.leave.model.Status;
 import nus.iss.edu.leave.repo.LeaveEntitlementRepository;
 import nus.iss.edu.leave.service.EmployeeService;
 import nus.iss.edu.leave.service.EmployeeServiceImpl;
 import nus.iss.edu.leave.service.LeaveApplicationService;
 import nus.iss.edu.leave.service.LeaveApplicationServiceImpl;
+import nus.iss.edu.leave.service.LeaveTypeService;
+import nus.iss.edu.leave.service.LeaveTypeServiceImpl;
 import nus.iss.edu.leave.validator.LeaveApplicationValidator;
 
 @Controller
@@ -35,6 +39,13 @@ public class LeaveApplicationController {
 	@InitBinder protected void initBinder(WebDataBinder binder) {
 		binder.addValidators(new LeaveApplicationValidator());
 
+	}
+	
+	@Autowired
+	public LeaveTypeService ltservice;
+	
+	public void setLeaveTypeService (LeaveTypeServiceImpl ltserviceimp) {
+		this.ltservice = ltserviceimp;
 	}
 	
 	@Autowired
@@ -65,6 +76,10 @@ public class LeaveApplicationController {
 	
 	@RequestMapping(value = "/submitLeave")
 	public String submitLeave (@ModelAttribute ("leaveapplication") @Valid LeaveApplication la, BindingResult bindingResult, Model model, HttpServletRequest request){
+		
+		ArrayList<LeaveType> leaveTypes = ltservice.findAllLeaveType();
+		model.addAttribute("ltypes", leaveTypes);
+		
 		if (bindingResult.hasErrors()) {
 			return "leave-form";
 		}
@@ -72,25 +87,45 @@ public class LeaveApplicationController {
 		la.setEmployee(emp);
 
 		LeaveEntitlement leaveEntitlementResult = new LeaveEntitlement();
-
+		
+		System.out.println("la is "+la.getLeaveentitlement().getType().getType());
+		
 		List<LeaveEntitlement> leaveEntitlement = lerepo.findAll();
 		for (Iterator<LeaveEntitlement> iterator = leaveEntitlement.iterator(); iterator.hasNext();) {
 			LeaveEntitlement leaveentitle = (LeaveEntitlement) iterator.next();
-			if(leaveentitle.getRole() == la.getEmployee().getRole() && leaveentitle.getType()== la.getLeaveentitlement().getType())
+			
+			System.out.println(leaveentitle);
+			
+			if(leaveentitle.getRole() == la.getEmployee().getRole() && leaveentitle.getType().getType().equals(la.getLeaveentitlement().getType().getType()))
 			{
 				leaveEntitlementResult = leaveentitle;
 			}
 		}
+		request.setAttribute("empid", emp.getId());
+		
+		
+		System.out.println(" leaveEntitlementResult "+leaveEntitlementResult);
 		
 		if(lservice.leaveValidation(la))
 		{
 			la.setLeaveentitlement(leaveEntitlementResult);
 			lservice.addLeaveApplication(la);
-			request.setAttribute("empid", emp.getId());
 			return "forward:/employee/leave_form/list";
 		}
-		else return "leave-form";
+		else {
+			model.addAttribute("empid",emp.getId());
+			return "index";
+		}		
 	}
+	
+	
+	@RequestMapping(value = "/view/{leave_app_id}")
+	public String viewLeave(Model model,@PathVariable("leave_app_id") Integer id) {
+		model.addAttribute("leaveapplication", lservice.findLeaveApplicationById(id));
+		return "leave-form-detail";
+	}
+	
+	
 	
 	@RequestMapping(value = "/list")
 	public String listByEmpId(Model model,HttpServletRequest request) {
@@ -107,7 +142,9 @@ public class LeaveApplicationController {
 		LeaveApplication updateLeave = lservice.findLeaveApplicationById(id);
 		updateLeave.setStatus(Status.UPDATED);
 		model.addAttribute("leaveapplication", updateLeave);
-		return "leave-form";
+		ArrayList<LeaveType> leaveTypes = ltservice.findAllLeaveType();
+		model.addAttribute("ltypes", leaveTypes);
+		return "update-leave-app";
 	}
 	
 	@RequestMapping(value = "/cancel/{leave_app_id}")
