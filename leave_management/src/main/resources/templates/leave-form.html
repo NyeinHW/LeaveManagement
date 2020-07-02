@@ -10,7 +10,7 @@
 	<header th:insert="fragments/employee-general.html :: header"> </header>
 
 <h1> Apply Leave</h1>
-<form action='#' th:object="${leaveapplication}" th:action="@{/employee/submitLeave}" method="post">
+<form action='#' th:object="${leaveapplication}" th:action="@{/employee/leave_form/submitLeave}" method="post">
 		<fieldset>
 			<input type="hidden" th:field="*{employee.id}" th:value="${empid}">
 		</fieldset>	

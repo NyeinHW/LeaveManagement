@@ -15,7 +15,7 @@ public class LeaveApplicationValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		LeaveApplication leaveapp = (LeaveApplication) target;
 		if(leaveapp.getEnd_date().before(leaveapp.getStart_date())){		
-			errors.rejectValue("start_date", "Start date MUST not be before End date");
+			errors.rejectValue("start_date", "date_chronologically.error.msg");
 		}
 	}
 

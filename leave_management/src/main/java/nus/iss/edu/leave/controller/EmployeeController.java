@@ -47,14 +47,7 @@ public class EmployeeController {
 
 	@Autowired
 	protected LeaveApplicationService laservice;
-	
-	/*
-	 * @InitBinder protected void initBinder(WebDataBinder binder) {
-	 * binder.addValidators(new LeaveApplicationValidator());
-	 * 
-	 * }
-	 */
-
+	 
 	@Autowired
 	public void setLeaveApplicationService (LeaveApplicationServiceImpl laserviceim)
 	{
@@ -64,13 +57,12 @@ public class EmployeeController {
 	@Autowired
 	protected LeaveEntitlementRepository levEntRepo;
 	
-
-	@GetMapping(value = "/login")
+	@GetMapping(value = "/loginpage")
 	public String loginPage(@ModelAttribute("employee") Employee emp) {
 		return "employee-login";
 	}
 
-	@RequestMapping(value = "/submit")
+	@RequestMapping(value = "/login")
 	public String login(@ModelAttribute ("employee") @Valid Employee emp, BindingResult result, Model model,HttpServletRequest request) {
 
 		if (result.hasErrors())
@@ -99,62 +91,6 @@ public class EmployeeController {
 		la.setStatus(Status.APPLIED);
 		la.setEmployee(empservice.findEmployeeById(id));
 		return "leave-form"; 
-	}
-
-	@RequestMapping(value = "/submitLeave")
-	public String submitLeave (@ModelAttribute ("leaveapplication") @Valid LeaveApplication la, BindingResult bindingResult, Model model, HttpServletRequest request){
-		if (bindingResult.hasErrors()) {
-			return "leave-form";
-		}
-		Employee emp = empservice.findEmployeeById(la.getEmployee().getId());
-		la.setEmployee(emp);
-
-		LeaveEntitlement leaveEntitlementResult = new LeaveEntitlement();
-
-		List<LeaveEntitlement> leaveEntitlement = lerepo.findAll();
-		for (Iterator<LeaveEntitlement> iterator = leaveEntitlement.iterator(); iterator.hasNext();) {
-			LeaveEntitlement leaveentitle = (LeaveEntitlement) iterator.next();
-			if(leaveentitle.getRole() == la.getEmployee().getRole() && leaveentitle.getType()== la.getLeaveentitlement().getType())
-			{
-				leaveEntitlementResult = leaveentitle;
-			}
-		}
-		
-		if(laservice.leaveValidation(la))
-		{
-			la.setLeaveentitlement(leaveEntitlementResult);
-			laservice.addLeaveApplication(la);
-			request.setAttribute("empid", emp.getId());
-			return "forward:/employee/leave_form/list";
-		}
-		else return "leave-form";
-	}
-	
-	@RequestMapping(value = "/leave-form/edit/{leave_app_id}")
-	public String updateLeave(Model model,@PathVariable("leave_app_id") Integer id) {
-		LeaveApplication updateLeave = laservice.findLeaveApplicationById(id);
-		updateLeave.setStatus(Status.UPDATED);
-		model.addAttribute("leaveapplication", updateLeave);
-		return "leave-form";
-	}
-	
-	@RequestMapping(value = "/leave-form/cancel/{leave_app_id}")
-	public String cancelLeave(Model model,@PathVariable("leave_app_id") Integer id,HttpServletRequest request) {
-		LeaveApplication la=laservice.findLeaveApplicationById(id);
-		la.setStatus(Status.CANCELLED);
-		request.setAttribute("empid", la.getEmployee().getId());
-		model.addAttribute("leaveapplication", laservice.findLeaveApplicationById(id));
-		return "forward:/employee/leave_form/list";
-	}
-	
-	@RequestMapping(value = "/leave-form/delete/{leave_app_id}")
-	public String deleteLeave(Model model,@PathVariable("leave_app_id") Integer id,HttpServletRequest request) {
-
-		LeaveApplication la=laservice.findLeaveApplicationById(id);
-		request.setAttribute("empid", la.getEmployee().getId());
-		
-		laservice.deleteLeaveApplication(la);
-		return "forward:/employee/leave_form/list";
 	}
 	
 }

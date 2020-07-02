@@ -42,12 +42,6 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 	@Autowired
 	LeaveEntitlementRepository lerepo;
 	
-	@InitBinder
-	protected void initBinder(WebDataBinder binder) {
-		binder.addValidators(new LeaveApplicationValidator());
-		
-	}
-	
 	@Override
 	public boolean leaveValidation(LeaveApplication leaveapp) {
 		
@@ -72,10 +66,10 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 		Date endDate = leaveapp.getEnd_date();
 		
 		
-		if(endDate.before(startDate)){		
-			System.out.println("StartDate is before EndDate");
-			return false;
-		}
+		/*
+		 * if(endDate.before(startDate)){
+		 * System.out.println("StartDate is before EndDate"); return false; }
+		 */
 		
 		if(isUnique(leaveapp.getEmployee().getId(),startDate,endDate)) {
 			return true;
