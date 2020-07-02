@@ -26,6 +26,7 @@ import nus.iss.edu.leave.service.EmployeeService;
 import nus.iss.edu.leave.service.EmployeeServiceImpl;
 import nus.iss.edu.leave.service.LeaveApplicationService;
 import nus.iss.edu.leave.service.LeaveApplicationServiceImpl;
+import nus.iss.edu.leave.validator.LeaveApplicationValidator;
 
 @Controller
 @RequestMapping("employee/leave_form")

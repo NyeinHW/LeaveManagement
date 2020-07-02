@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import nus.iss.edu.leave.controller.LeaveApplicationValidator;
 import nus.iss.edu.leave.model.LeaveApplication;
 import nus.iss.edu.leave.model.LeaveBalance;
 import nus.iss.edu.leave.model.LeaveEntitlement;
@@ -29,6 +28,7 @@ import nus.iss.edu.leave.model.Status;
 import nus.iss.edu.leave.repo.LeaveApplicationRepository;
 import nus.iss.edu.leave.repo.LeaveBalanceRepository;
 import nus.iss.edu.leave.repo.LeaveEntitlementRepository;
+import nus.iss.edu.leave.validator.LeaveApplicationValidator;
 
 @Service
 public class LeaveApplicationServiceImpl implements LeaveApplicationService {

@@ -1,4 +1,4 @@
-package nus.iss.edu.leave.controller;
+package nus.iss.edu.leave.validator;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -6,6 +6,10 @@ import nus.iss.edu.leave.model.LeaveApplication;
 
 public class LeaveApplicationValidator implements Validator {
 
+	
+	
+	
+	
 	@Override
 	public boolean supports(Class<?> clazz) {
 		return LeaveApplication.class.equals(clazz);
