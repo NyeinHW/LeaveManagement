@@ -18,6 +18,9 @@
 			<th >End Date</th>
 			<th >Leave Type</th>
 			<th >Status</th>
+			<th >Status</th>
+			<th></th>
+
 		</tr>
 		<tr th:each="leaveApplication:${leaveApplications}" class="table-row">
 			<td th:text="${#dates.format(leaveApplication.start_date, 'dd-MM-yyyy')}">Start Date</td>
@@ -26,7 +29,7 @@
 			<td th:text=${leaveApplication.status}>Status</td>
 
 				<td><a href="Detail.html"
-						th:href="@{/employee/leave_form/view/}+${leaveApplication.id}">View Details</a></td>
+               th:href="@{/employee/leave_form/view/}+${leaveApplication.id}">View Details</a></td>
 		</tr>
 	</table>
     <br/>
