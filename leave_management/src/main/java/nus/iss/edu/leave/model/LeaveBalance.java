@@ -25,12 +25,22 @@ public class LeaveBalance {
 	public LeaveBalance() {
 		super();
 	}
+	
+	public LeaveBalance(Employee employee, LeaveEntitlement leaveentitlement) {
+		super();
+		this.employee = employee;
+		this.leaveentitlement = leaveentitlement;
+	}
+
 	public LeaveBalance(int id, Employee employee, LeaveEntitlement leaveentitlement, @NotEmpty int balance) {
 		super();
 		this.id = id;
 		this.employee = employee;
 		this.leaveentitlement = leaveentitlement;
 		this.balance = balance;
+	}
+	public LeaveBalance(LeaveBalanceIdentity leaveBalanceIdentity, double maxNoOfDays) {
+		// TODO Auto-generated constructor stub
 	}
 	public int getId() {
 		return id;

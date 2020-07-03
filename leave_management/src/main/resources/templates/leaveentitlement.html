@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Leave Entitle List</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+
+<body>
+<div class="container" align="center">
+    <div th:if="${not #lists.isEmpty(leavelist)}">
+        <h2>All Leave Entitles</h2>
+        <table border='1' class="table table-striped">
+            <tr>
+             
+                <th>LeaveType</th>
+                <th>Role</th>
+                <th>MaxNoOfDays</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <tr th:each="leaveentitlement : ${leavelist}">
+            	<td  th:text="${leaveentitlement.mykey.leavetype.type}">LeaveType</td>
+                <td  th:text="${leaveentitlement.mykey.role}">Role</td>
+                <td  th:text="${leaveentitlement.mykey.maxnoofdays}"></td>
+                <td ><a th:href="${'/leaveentitlement/edit/' + leaveentitlement.id}" class="btn btn-default">Edit</a></td>
+                <td ><a th:href="${'/leaveentitlement/delete/' + leaveentitlement.id}" class="btn btn-danger">Delete</a></td>
+            </tr>
+        </table>
+    </div>
+    <br>
+</div>
+<div class="w3-container" align="center">
+    <a th:href="${'/leaveentitlement/add'}" class="w3-button w3-black">AddLeaveType</a>
+    </div>
+</body>
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const message = urlParams.get('Message');
+    if(message != null && message != ""){
+    	alert(message);
+    }
+</script>
+
+
+</html>

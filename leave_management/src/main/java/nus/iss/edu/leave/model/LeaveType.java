@@ -2,6 +2,7 @@ package nus.iss.edu.leave.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,12 +22,10 @@ public class LeaveType {
 	private String type; 
 	
 	private int MaxNoOfDays;
-	// Not Employee Leave entitlement, it's the maximum 
-	//number of days in company policy e.g. Medical Leave cannot 
-	//exceed 60 days 
+
 	
-	@OneToMany(mappedBy="leavetype")
-	private List<LeaveEntitlement> leaveentitlement;
+	@OneToMany(mappedBy="leaveId",cascade = CascadeType.PERSIST)
+	private List<LeaveEntitlement> leaveentitlement;	
 	
 	public LeaveType() {
 		super();
