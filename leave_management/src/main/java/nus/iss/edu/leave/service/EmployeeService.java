@@ -9,5 +9,5 @@ public interface EmployeeService {
 	public void deleteEmployee(Employee emp);
 	public ArrayList<String> findAllEmployeeNames(String name);
 	public Employee findEmployeeById(Integer id);
-	public Employee findEmployeeByName(String name);
+	public Employee findEmployeeByUsername(String name);
 }

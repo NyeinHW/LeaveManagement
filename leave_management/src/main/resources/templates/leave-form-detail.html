@@ -5,43 +5,68 @@
 <title>Leave Application Form</title>
 <link rel="stylesheet" type="text/css" media="all"
 	href="../../css/style.css" th:href="@{/css/style.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
-<h1>Your's Leave</h1>
+	<h1>Your's Leave</h1>
 
-<table>
-
-<tr >
-			<th >Start Date</th>
-			<th >End Date</th>
-			<th >Leave Type</th>
-			<th >Reason</th>
-			<th >Status</th>
-<!-- 			<th >Manage Comment</th> -->
-			<th >Work Dissemination</th>
-			<th></th>
-			<th></th>
-			<th></th>
+	<table class="table table-bordered table-hover">
+		<tr>
+			<td>Start Date</td>
+			<td th:object="${leaveapplication}"
+				th:text="${#dates.format(leaveapplication.start_date, 'dd-MM-yyyy')}">Start
+				Date</td>
+		</tr>
+		<tr>
+			<td>End Date</td>
+			<td
+				th:text="${#dates.format(leaveapplication.end_date, 'dd-MM-yyyy')}">End
+				Date</td>
+		</tr>
+		<tr>
+			<td>Leave Type</td>
+			<td th:text=${leaveapplication.leaveentitlement.type.type}>Type</td>
+		</tr>
+		<tr>
+			<td>Reason</td>
+			<td th:text=${leaveapplication.reason}>Reason</td>
+		</tr>
+		<tr>
+			<td>Status</td>
+			<td th:text=${leaveapplication.status}>Status</td>
+		</tr>
+		<tr>
+			<td>Work Dissemination</td>
+			<td th:text="${leaveapplication.work_dissemination}">Work
+				Dissemination</td>
+		</tr>
+		<tr>
+			<td>Manager Comment</td>
+			<td th:text=${leaveapplication.manager_cmt}>Comment</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><a
+				th:if="${leaveapplication.status != T(nus.iss.edu.leave.model.Status).APPROVED and leaveapplication.status != T(nus.iss.edu.leave.model.Status).REJECTED and leaveapplication.status != T(nus.iss.edu.leave.model.Status).CANCELLED}"
+				href="EditLeaveApplication.html"
+				th:href="@{/employee/leave_form/edit/}+${leaveapplication.id}">Update</a>
+				<a
+				th:if="${leaveapplication.status == T(nus.iss.edu.leave.model.Status).APPROVED}"
+				href="CancelLeaveApplication.html"
+				th:href="@{/employee/leave_form/cancel/}+${leaveapplication.id}">Cancel</a>
+				<a
+				th:if="${leaveapplication.status != T(nus.iss.edu.leave.model.Status).APPROVED and leaveapplication.status != T(nus.iss.edu.leave.model.Status).REJECTED and leaveapplication.status != T(nus.iss.edu.leave.model.Status).CANCELLED} "
+				href="DeleteMember.html"
+				th:href="@{/employee/leave_form/delete/}+${leaveapplication.id}">Delete</a></td>
 		</tr>
 
-<tr th:object="${leaveapplication}" class="table-row">
-	<td th:object="${leaveapplication}" th:text="${#dates.format(leaveapplication.start_date, 'dd-MM-yyyy')}">Start Date</td>
-	<td th:text="${#dates.format(leaveapplication.end_date, 'dd-MM-yyyy')}">End Date</td>
-	<td th:text=${leaveapplication.leaveentitlement.type}>Type</td>
-	<td th:text=${leaveapplication.reason}>Reason</td>
-	<td th:text=${leaveapplication.status}>Status</td>
-	<td th:text="${leaveapplication.work_dissemination}">Work Dissemination</td>
-	<td><a th:if="${leaveapplication.status != T(nus.iss.edu.leave.model.Status).APPROVED and leaveapplication.status != T(nus.iss.edu.leave.model.Status).REJECTED and leaveapplication.status != T(nus.iss.edu.leave.model.Status).CANCELLED}"
-			href="EditLeaveApplication.html" 
-			th:href="@{/employee/leave-form/edit/}+${leaveapplication.id}">Update</a></td>
-	 <td><a th:if="${leaveapplication.status == T(nus.iss.edu.leave.model.Status).APPROVED}"
-	 		href="CancelLeaveApplication.html" 
-			th:href="@{/employee/leave-form/cancel/}+${leaveapplication.id}">Cancel</a></td>
-	<td><a th:if="${leaveapplication.status != T(nus.iss.edu.leave.model.Status).APPROVED and leaveapplication.status != T(nus.iss.edu.leave.model.Status).REJECTED and leaveapplication.status != T(nus.iss.edu.leave.model.Status).CANCELLED} "
-	 		href="DeleteMember.html"
-			th:href="@{/employee/leave-form/delete/}+${leaveapplication.id}">Delete</a></td>
 
-</tr>
-</table>
+	</table>
+	<input type="button" onclick="goBack()" value="Back"/>
+	<script>
+	function goBack() {
+	  window.history.back();
+	}
+	</script>
 </body>
 </html>
