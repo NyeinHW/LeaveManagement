@@ -54,14 +54,14 @@ public class AdminController {
 
 		System.out.print("test");
 		
-		Optional<Employee> e = emprepo.findByUsername(employee.getUsername());
-		Role r = e.get().getRole();
-		String usern = e.get().getUsername();
+		Employee e = emprepo.findEmployeeByUsername(employee.getUsername());
+		Role r = e.getRole();
+		String usern = e.getUsername();
 		System.out.print(usern + "   " + r);
 			
-		if(e.isPresent() && e.get().getRole() == Role.ADMIN )
+		if(e!= null && e.getRole() == Role.ADMIN )
 		{
-			if(e.get().getPassword().equals(employee.getPassword())){
+			if(e.getPassword().equals(employee.getPassword())){
 				return "admin-home"; 
 			}
 			else return "admin-login";

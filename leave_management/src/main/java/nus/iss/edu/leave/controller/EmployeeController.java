@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -84,31 +85,29 @@ public class EmployeeController {
 		System.out.println("Found Emp:" + employee);
 		if(employee != null)
 		{
-			
+			System.out.println("hello hi "+emp);
 			if(emp.getPassword().equals(employee.getPassword())){
-				
+
 				request.setAttribute("empid", employee.getId());
 				
-				if(emp.getRole().equals(Role.MANAGER)) {
+				if(employee.getRole()==Role.MANAGER) {
+					System.out.println("it is manager");
 					return "forward:/manager/list";
 				}
-				if(emp.getRole().equals(Role.STAFF)) {
+				if(employee.getRole()==Role.STAFF) {
+					System.out.println("role is"+emp.getRole());
 					return "forward:/employee/leave_form/list"; 
 				}
-			}
-			else {
-				return "employee-login";
-			}
+			}		
 		}
-		
 		System.out.println("Incorrect password");
 		//include error page.
-		return "employee-login";
+		return "forward:/employee/loginpage";
 	}
 
 	@RequestMapping(value = "/applyLeave/{empid}") 
 	public String applyLeave (@PathVariable ("empid") Integer id,  @ModelAttribute("leaveapplication") LeaveApplication la,Model model) {
-		int empid = (Integer) id;
+		int empid = (Integer) id; 
 		la.setStatus(Status.APPLIED);
 		la.setEmployee(empservice.findEmployeeById(id));
 		ArrayList<LeaveType> leaveTypes = ltservice.findAllLeaveType();

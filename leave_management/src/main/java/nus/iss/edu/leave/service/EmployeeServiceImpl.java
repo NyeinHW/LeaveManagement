@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nus.iss.edu.leave.model.Employee;
+import nus.iss.edu.leave.model.Role;
 import nus.iss.edu.leave.repo.EmployeeRepository;
 
 @Service
@@ -85,6 +86,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	        else if(employee.isPresent()) 
 	            {
 	                Employee newEntity = employee.get();
+	                newEntity.setUsername(entity.getUsername());
 	                newEntity.setEmail(entity.getEmail());
 	                newEntity.setName(entity.getName());
 	                newEntity.setContact_no(entity.getContact_no());
@@ -105,10 +107,24 @@ public class EmployeeServiceImpl implements EmployeeService {
 	         
 	        if(employee.isPresent()) 
 	        {
+	        	if (employee.get().getRole() == Role.MANAGER) {
+	        		List<Employee> subordinates = erepo.findByManager(employee.get());
+	        		for (Employee s : subordinates) {
+	        			s.setManager(null);;
+	        		}	
+	        	}
 	            erepo.deleteById(id);
 	        } //else {
 	           // throw new RecordNotFoundException("No employee record exist for given id");
 	        //}
-	    } 
+	    }
+	  
+	  
+
+	@Override
+	public Employee findEmployeeByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	} 
 
 }

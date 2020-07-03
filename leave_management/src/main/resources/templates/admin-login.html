@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>Admin Login</h1>
-    <form action="#" th:object="${admin}" th:action="@{/admin/login}" method="post">
+    <form action="#" th:object="${employee}" th:action="@{/admin/login}" method="post">
 		<fieldset>
 			Username: <input type="text" th:field="*{username}">
 			<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>

@@ -50,10 +50,15 @@ public class LeaveManagementApplication {
 	
 	  @Bean public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 	  return args ->{
-
+		  LeaveType medical = new LeaveType("Medical", 60);
+		  LeaveType annual = new LeaveType("Annual",14); 
+		  LeaveType compensation = new LeaveType("Compensation",20);
+		  
+		  ltrepo.save(medical); ltrepo.save(annual); ltrepo.save(compensation);
+		  System.out.println("End leave type creation");
 		  long millis=System.currentTimeMillis();  
 		  java.util.Date date=new java.util.Date(millis);  
-		  LeaveEntitlement le5=new LeaveEntitlement(LeaveType.ANNUAL,Role.MANAGER,12);
+		  LeaveEntitlement le5=new LeaveEntitlement(medical,Role.STAFF,12);
 		  Employee e1=new Employee("John","123456789", "john-sales", 1,"john_sales@gmail.com","Sunset Avenue",Role.MANAGER,date);
 
 		  LeaveApplication la1=new LeaveApplication("not",date,date,Status.UPDATED,"not sure","hello",e1,le5);
@@ -82,12 +87,12 @@ public class LeaveManagementApplication {
 		  LeaveEntitlement le2 = new LeaveEntitlement();
 
 		  le1.setLeave_count(18);
-		  le1.setRole(Role.MANAGER);
-		  le1.setType(LeaveType.ANNUAL);
+		  le1.setRole(Role.STAFF);
+		  le1.setType(annual);
 
 		  le2.setLeave_count(60);
-		  le2.setRole(Role.MANAGER);
-		  le2.setType(LeaveType.MEDICAL);
+		  le2.setRole(Role.STAFF);
+		  le2.setType(medical);
 
 		  lerepo.save(le1); lerepo.save(le2);
 
@@ -97,8 +102,11 @@ public class LeaveManagementApplication {
 
 		  lbrepo.save(lb1); lbrepo.save(lb2);
 		  
-		  Employee e3 = new Employee("Dorothy", "Passw1234", "admin-doro", 92743748, "dorothy-admin@gmail.com", "Lucky Avenue", Role.ADMIN, date);
+		  Employee e3 = new Employee("Dorothy", "nyein", "123456789", 92743748, "dorothy-admin@gmail.com", "Lucky Avenue", Role.STAFF, date);
+		  Employee e4 = new Employee("Dorothy", "hsu", "123456789", 92743748, "dorothy-admin@gmail.com", "Lucky Avenue", Role.ADMIN, date);
+
 		  erepo.save(e3);
+		  erepo.save(e4);
 	  };
 	  
 	  }

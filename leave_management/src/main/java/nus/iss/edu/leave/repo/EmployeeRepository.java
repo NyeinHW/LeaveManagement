@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import nus.iss.edu.leave.model.Employee;
+import nus.iss.edu.leave.model.Role;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 	
@@ -16,9 +17,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 	
 	Employee findEmployeeByUsername(String name);
 		List<Employee> findByRole(Role role);
-
-	@Query(value="Select * from leaveApplication l INNER JOIN l.employee le where le.manager = :manager_id",nativeQuery=true)
-	ArrayList<Employee> findByManagerid(@Param("id") int id);
+		
+		List<Employee> findByManager(Employee manager);
 
 }
 

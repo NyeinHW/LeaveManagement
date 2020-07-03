@@ -114,7 +114,7 @@ public class LeaveApplicationController {
 		}
 		else {
 			model.addAttribute("empid",emp.getId());
-			return "index";
+			return "error";
 		}		
 	}
 	
@@ -122,6 +122,7 @@ public class LeaveApplicationController {
 	@RequestMapping(value = "/view/{leave_app_id}")
 	public String viewLeave(Model model,@PathVariable("leave_app_id") Integer id) {
 		model.addAttribute("leaveapplication", lservice.findLeaveApplicationById(id));
+		System.out.println("Detail is"+lservice.findLeaveApplicationById(id));
 		return "leave-form-detail";
 	}
 	
@@ -144,7 +145,7 @@ public class LeaveApplicationController {
 		model.addAttribute("leaveapplication", updateLeave);
 		ArrayList<LeaveType> leaveTypes = ltservice.findAllLeaveType();
 		model.addAttribute("ltypes", leaveTypes);
-		return "update-leave-app";
+		return "update-leave-app-by-emp";
 	}
 	
 	@RequestMapping(value = "/cancel/{leave_app_id}")
@@ -160,10 +161,11 @@ public class LeaveApplicationController {
 	public String deleteLeave(Model model,@PathVariable("leave_app_id") Integer id,HttpServletRequest request) {
 
 		LeaveApplication la=lservice.findLeaveApplicationById(id);
+		la.setStatus(Status.DELETED);
 		request.setAttribute("empid", la.getEmployee().getId());
-		
-		lservice.deleteLeaveApplication(la);
+		model.addAttribute("leaveapplication", lservice.findLeaveApplicationById(id));
 		return "forward:/employee/leave_form/list";
+//		lservice.deleteLeaveApplication(la);
 	}
     
 }
