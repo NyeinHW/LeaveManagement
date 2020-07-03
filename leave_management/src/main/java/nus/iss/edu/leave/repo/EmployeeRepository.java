@@ -15,8 +15,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 	List<Employee> findAllEmployeesByName(String name);
 	
 	Employee findEmployeeByUsername(String name);
-	
+		List<Employee> findByRole(Role role);
+
 	@Query(value="Select * from leaveApplication l INNER JOIN l.employee le where le.manager = :manager_id",nativeQuery=true)
 	ArrayList<Employee> findByManagerid(@Param("id") int id);
 
 }
+

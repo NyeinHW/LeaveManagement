@@ -117,5 +117,14 @@ public class EmployeeController {
 		return "leave-form"; 
 	}
 	
+	@RequestMapping(value = "/leave-form/view/{leave_app_id}")
+	public String viewLeave(Model model,@PathVariable("leave_app_id") Integer id) {
+//		LeaveApplication updateLeave = laservice.findLeaveApplicationById(id);
+//		updateLeave.setStatus(Status.UPDATED);
+//		model.addAttribute("leaveapplication", updateLeave);
+		model.addAttribute("leaveapplication", laservice.findLeaveApplicationById(id));
+		return "leave-form-detail";
+	}
+	
 }
 		
