@@ -23,6 +23,7 @@ import nus.iss.edu.leave.model.Employee;
 import nus.iss.edu.leave.model.LeaveApplication;
 import nus.iss.edu.leave.model.LeaveEntitlement;
 import nus.iss.edu.leave.model.LeaveType;
+import nus.iss.edu.leave.model.Role;
 import nus.iss.edu.leave.model.Status;
 import nus.iss.edu.leave.repo.LeaveEntitlementRepository;
 import nus.iss.edu.leave.service.EmployeeService;
@@ -79,14 +80,21 @@ public class EmployeeController {
 		}
 
 		Employee employee = empservice.findEmployeeByUsername(emp.getUsername());
+		
 		System.out.println("Found Emp:" + employee);
 		if(employee != null)
 		{
+			
 			if(emp.getPassword().equals(employee.getPassword())){
-							
+				
 				request.setAttribute("empid", employee.getId());
-
-				return "forward:/employee/leave_form/list"; 
+				
+				if(emp.getRole().equals(Role.MANAGER)) {
+					return "forward:/manager/list";
+				}
+				if(emp.getRole().equals(Role.STAFF)) {
+					return "forward:/employee/leave_form/list"; 
+				}
 			}
 			else {
 				return "employee-login";
