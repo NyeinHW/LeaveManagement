@@ -1,5 +1,9 @@
 package nus.iss.edu.leave.controller;
 
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,14 +54,21 @@ public class ManagerController extends EmployeeController {
 	}
 	
 	@GetMapping("/list")
-	public String showhistory(Model model, Employee em) {
-		model.addAttribute("Employee", emRepo.findByManagerid(em.getManager_id()));
+	public String showhistory(Model model, Employee em, HttpServletRequest request) {
+		int managerid = (Integer) request.getAttribute("empid");
+		
+		ArrayList<Employee> llist = laRepo.findByManagerid(managerid);
+		model.addAttribute("llist", llist); 
+
 		return "manager-view-list";
 	}
 	
 	@GetMapping("/listnow")
 	public String shownow(Model model, Employee em) {
-		model.addAttribute("Employee", emRepo.findByHistoryTime(em.getDoh()));
+		/* model.addAttribute("Employee", emRepo.findByHistoryTime(em.getDoh())); */
+		
+		//pending for new query method
+		
 		return "manager-view-list";
 	}
 }
