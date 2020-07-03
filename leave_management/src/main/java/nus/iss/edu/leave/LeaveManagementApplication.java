@@ -67,8 +67,8 @@ public class LeaveManagementApplication {
 			  LeaveEntitlement le2 = new LeaveEntitlement(medical,Role.MANAGER,60);
 			  LeaveEntitlement le3 = new LeaveEntitlement(medical,Role.STAFF,60);
 			  
-			  Employee e1 = new Employee("nyein","123456789",1,"n@gmail.com","natogyi",Role.MANAGER,date,1);
-			  Employee e2 = new Employee("sam","1235679800",95185999,"acbc@gmail.com","AMK",Role.STAFF,date,1); 
+			  Employee e1 = new Employee("nyein","nyeinuser","123456789",1,"n@gmail.com","natogyi",Role.MANAGER,date,1);
+			  Employee e2 = new Employee("sam","samnuser","1235679800",95185999,"acbc@gmail.com","AMK",Role.STAFF,date,1); 
 			  
 			  LeaveApplication la1=new LeaveApplication("not",date,date,Status.UPDATED,"hate","hello",e1,le5);
 			  LeaveApplication la2=new LeaveApplication("hello",date,date,Status.APPROVED,"ok","hello",e1,le5);

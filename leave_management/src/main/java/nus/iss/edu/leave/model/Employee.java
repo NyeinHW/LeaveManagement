@@ -22,8 +22,9 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	@NotEmpty
 	private String name;
+	@NotEmpty
+	private String username;
 	@NotEmpty
 	@Length(min=8)
 	private String password;
@@ -44,10 +45,11 @@ public class Employee {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Employee(@NotEmpty String name, @NotEmpty @Length(min = 8) String password, int contact_no,
+	public Employee(String name, @NotEmpty String username, @NotEmpty @Length(min = 8) String password, int contact_no,
 			@Email String email, String address, Role role, Date doh, int manager_id) {
 		super();
 		this.name = name;
+		this.username = username;
 		this.password = password;
 		this.contact_no = contact_no;
 		this.email = email;
@@ -55,33 +57,18 @@ public class Employee {
 		this.role = role;
 		this.doh = doh;
 		this.manager_id = manager_id;
-	}
-	public Employee(@NotEmpty String name, @NotEmpty @Length(min = 8) String password, int contact_no,
-			@Email String email, String address, Role role, Date doh, int manager_id, LeaveApplication leaveapplication,
-			LeaveBalance leavebalance) {
-		super();
-		this.name = name;
-		this.password = password;
-		this.contact_no = contact_no;
-		this.email = email;
-		this.address = address;
-		this.role = role;
-		this.doh = doh;
-		this.manager_id = manager_id;
-		this.leaveapplication = (List<LeaveApplication>) leaveapplication;
-		this.leavebalance = (List<LeaveBalance>) leavebalance;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
 	}
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getPassword() {
 		return password;
@@ -125,22 +112,27 @@ public class Employee {
 	public void setManager_id(int manager_id) {
 		this.manager_id = manager_id;
 	}
-	public LeaveApplication getLeaveapplication() {
-		return (LeaveApplication) leaveapplication;
+	public List<LeaveApplication> getLeaveapplication() {
+		return leaveapplication;
 	}
-	public void setLeaveapplication(LeaveApplication leaveapplication) {
-		this.leaveapplication = (List<LeaveApplication>) leaveapplication;
+	public void setLeaveapplication(List<LeaveApplication> leaveapplication) {
+		this.leaveapplication = leaveapplication;
 	}
-	public LeaveBalance getLeavebalance() {
-		return (LeaveBalance) leavebalance;
+	public List<LeaveBalance> getLeavebalance() {
+		return leavebalance;
 	}
-	public void setLeavebalance(LeaveBalance leavebalance) {
-		this.leavebalance = (List<LeaveBalance>) leavebalance;
+	public void setLeavebalance(List<LeaveBalance> leavebalance) {
+		this.leavebalance = leavebalance;
+	}
+	public int getId() {
+		return id;
 	}
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", name=" + name + ", password=" + password + ", contact_no=" + contact_no
-				+ ", email=" + email + ", address=" + address + ", role=" + role + ", doh=" + doh + "]";
+		return "Employee [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password
+				+ ", contact_no=" + contact_no + ", email=" + email + ", address=" + address + ", role=" + role
+				+ ", doh=" + doh + ", manager_id=" + manager_id + ", leaveapplication=" + leaveapplication
+				+ ", leavebalance=" + leavebalance + "]";
 	}
 	
 }

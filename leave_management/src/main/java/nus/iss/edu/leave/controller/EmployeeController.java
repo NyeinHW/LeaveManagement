@@ -73,13 +73,17 @@ public class EmployeeController {
 	public String login(@ModelAttribute ("employee") @Valid Employee emp, BindingResult result, Model model,HttpServletRequest request) {
 
 		if (result.hasErrors())
+		{
+			System.out.println("Invoke validator");
 			return "employee-login";
+		}
 
-		Employee employee = empservice.findEmployeeByName(emp.getName());
+		Employee employee = empservice.findEmployeeByUsername(emp.getUsername());
+		System.out.println("Found Emp:" + employee);
 		if(employee != null)
 		{
 			if(emp.getPassword().equals(employee.getPassword())){
-				
+							
 				request.setAttribute("empid", employee.getId());
 
 				return "forward:/employee/leave_form/list"; 
@@ -88,6 +92,8 @@ public class EmployeeController {
 				return "employee-login";
 			}
 		}
+		
+		System.out.println("Incorrect password");
 		//include error page.
 		return "employee-login";
 	}
