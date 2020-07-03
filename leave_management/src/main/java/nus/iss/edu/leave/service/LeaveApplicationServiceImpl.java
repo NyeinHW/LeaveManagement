@@ -167,7 +167,16 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 
 	@Transactional
 	public void deleteLeaveApplication(LeaveApplication leaveApplication) {
-		 larepo.delete(leaveApplication);
+		leaveApplication.setStatus(Status.DELETED); 
+		larepo.save(leaveApplication);
+		
+	}
+
+
+	@Transactional
+	public void cancelLeaveApplication(LeaveApplication leaveApplication) {
+		leaveApplication.setStatus(Status.CANCELLED); 
+		larepo.save(leaveApplication);
 		
 	}
 

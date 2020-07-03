@@ -13,7 +13,8 @@ public interface LeaveApplicationService {
 	public ArrayList<LeaveApplication> findAllLeaveApplications();
 	public LeaveApplication findLeaveApplicationById(Integer id);
 	public void deleteLeaveApplication(LeaveApplication leaveApplication);
+	public void cancelLeaveApplication(LeaveApplication leaveApplication);
 	public ArrayList<LeaveApplication> findAllLeaveApplicationByEmployeeId(Integer id);
 	public boolean isUnique(int id,Date startDate,Date endDate,String type);
-	
+
 }

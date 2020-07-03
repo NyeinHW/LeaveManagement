@@ -6,6 +6,7 @@
 </head>
 <body>
 	<p>Leave date range is not valid</p>
+	<!--  
 	<form action='#' th:action="@{/employee/leave_form/list}" method="post">
 		<fieldset>
 			<input type="hidden" th:value="${empid}">
@@ -14,5 +15,13 @@
 			<input type="submit" value="Go to leave list" /> 
 		</fieldset>
 	</form>
+	-->
+	<input type="button" onclick="goBack()" value="Back"/>
+	
+	<script>
+	function goBack() {
+	  window.history.back();
+	}
+	</script>
 </body>
 </html>

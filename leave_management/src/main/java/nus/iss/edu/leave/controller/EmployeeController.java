@@ -95,7 +95,7 @@ public class EmployeeController {
 					return "forward:/manager/list";
 				}
 				if(employee.getRole()==Role.STAFF) {
-					System.out.println("role is"+emp.getRole());
+					System.out.println("role is"+employee.getRole());
 					return "forward:/employee/leave_form/list"; 
 				}
 			}		

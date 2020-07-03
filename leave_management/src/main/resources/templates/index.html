@@ -5,10 +5,12 @@
 </head>
 <body>
 	<header th:insert="fragments/general.html :: header"> </header>
-	<!--  <div th:replace="fragments/general.html :: menu"></div>
-	<div align="center">
-		<img alt="" th:src="@{/image/leave.jpg}" />
-	</div>-->
+<div class="btn_login">
+<a href="employeelogin.html"
+				 th:href="@{/employee/loginpage}">Employee Login</a>
+<a href="adminlogin.html"
+				 th:href="@{/admin/login}">Admin Login</a>	
+	</div>
 	<div th:replace="fragments/general.html :: footer"></div>
 </body>
 </html>

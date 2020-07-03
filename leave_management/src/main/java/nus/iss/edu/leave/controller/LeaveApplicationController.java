@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import nus.iss.edu.leave.model.Employee;
 import nus.iss.edu.leave.model.LeaveApplication;
@@ -101,13 +102,13 @@ public class LeaveApplicationController {
 				leaveEntitlementResult = leaveentitle;
 			}
 		}
-		request.setAttribute("empid", emp.getId());
 		
 		
 		System.out.println(" leaveEntitlementResult "+leaveEntitlementResult);
 		
 		if(lservice.leaveValidation(la))
 		{
+			request.setAttribute("empid", emp.getId());
 			la.setLeaveentitlement(leaveEntitlementResult);
 			lservice.addLeaveApplication(la);
 			return "forward:/employee/leave_form/list";
@@ -130,7 +131,8 @@ public class LeaveApplicationController {
 	
 	@RequestMapping(value = "/list")
 	public String listByEmpId(Model model,HttpServletRequest request) {
-        int empid = (Integer) request.getAttribute("empid");
+        
+		int empid = (Integer) request.getAttribute("empid");
 		System.out.println("id is"+empid);
 		model.addAttribute("leaveApplications", lservice.findAllLeaveApplicationByEmployeeId(empid));
 		model.addAttribute("empid",empid);
@@ -151,7 +153,7 @@ public class LeaveApplicationController {
 	@RequestMapping(value = "/cancel/{leave_app_id}")
 	public String cancelLeave(Model model,@PathVariable("leave_app_id") Integer id,HttpServletRequest request) {
 		LeaveApplication la=lservice.findLeaveApplicationById(id);
-		la.setStatus(Status.CANCELLED);
+		lservice.cancelLeaveApplication(la);
 		request.setAttribute("empid", la.getEmployee().getId());
 		model.addAttribute("leaveapplication", lservice.findLeaveApplicationById(id));
 		return "forward:/employee/leave_form/list";
@@ -161,7 +163,7 @@ public class LeaveApplicationController {
 	public String deleteLeave(Model model,@PathVariable("leave_app_id") Integer id,HttpServletRequest request) {
 
 		LeaveApplication la=lservice.findLeaveApplicationById(id);
-		la.setStatus(Status.DELETED);
+		lservice.deleteLeaveApplication(la);
 		request.setAttribute("empid", la.getEmployee().getId());
 		model.addAttribute("leaveapplication", lservice.findLeaveApplicationById(id));
 		return "forward:/employee/leave_form/list";
