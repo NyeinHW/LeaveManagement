@@ -10,7 +10,7 @@
 	<header th:insert="fragments/employee-general.html :: header"> </header>
 
 <h1> Apply Leave</h1>
-<form action='#' th:object="${leaveapplication}" th:action="@{/employee/submitLeave}" method="post">
+<form action='#' th:object="${leaveapplication}" th:action="@{/employee/leave_form/submitLeave}" method="post">
 		<fieldset>
 			<input type="hidden" th:field="*{employee.id}" th:value="${empid}">
 		</fieldset>	
@@ -21,11 +21,11 @@
 			<input type="text" th:field="*{status}" th:readonly="true">
 		</fieldset>	
 		<fieldset>
-			Leave Type: 
+			Leave Type: 	
 			<select th:field="*{leaveentitlement.type}">
-				<option th:each="ltype:${T(nus.iss.edu.leave.model.LeaveType).values()}" 
-				 th:value="${ltype}" th:text="${ltype}"></option>
-			</select>
+				<option th:each="ltype:${ltypes}" th:value="${ltype.type}"
+					th:text="${ltype.type}"></option>
+			</select>	
 		</fieldset>
 		<fieldset>
 			Start Date: <input type="text" th:field="*{start_date}"
@@ -50,13 +50,6 @@
 			<textarea th:field="*{work_dissemination}" cols="30" rows="10" placeholder="optional"></textarea>
 			<p th:if="${#fields.hasErrors('work_dissemination')}"
 				th:errors="*{work_dissemination}"></p>
-		</fieldset>
-		<fieldset>
-			Manager Comment:
-			<textarea th:field="*{manager_cmt}" cols="30" rows="10"
-				placeholder="optional"></textarea>
-			<p th:if="${#fields.hasErrors('manager_cmt')}"
-				th:errors="*{manager_cmt}"></p>
 		</fieldset>
 		<fieldset>
 			<input type="submit" value="Save" /> 

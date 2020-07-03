@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import nus.iss.edu.leave.controller.LeaveApplicationValidator;
 import nus.iss.edu.leave.model.LeaveApplication;
 import nus.iss.edu.leave.model.LeaveBalance;
 import nus.iss.edu.leave.model.LeaveEntitlement;
@@ -29,6 +28,7 @@ import nus.iss.edu.leave.model.Status;
 import nus.iss.edu.leave.repo.LeaveApplicationRepository;
 import nus.iss.edu.leave.repo.LeaveBalanceRepository;
 import nus.iss.edu.leave.repo.LeaveEntitlementRepository;
+import nus.iss.edu.leave.validator.LeaveApplicationValidator;
 
 @Service
 public class LeaveApplicationServiceImpl implements LeaveApplicationService {
@@ -42,63 +42,22 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 	@Autowired
 	LeaveEntitlementRepository lerepo;
 	
-	@InitBinder
-	protected void initBinder(WebDataBinder binder) {
-		binder.addValidators(new LeaveApplicationValidator());
-		
-	}
-	
 	@Override
 	public boolean leaveValidation(LeaveApplication leaveapp) {
 		
-		/*
-		 * LeaveEntitlement leaveEntitlementResult = new LeaveEntitlement();
-		 * 
-		 * List<LeaveEntitlement> leaveEntitlement = lerepo.findAll(); for
-		 * (Iterator<LeaveEntitlement> iterator = leaveEntitlement.iterator();
-		 * iterator.hasNext();) { LeaveEntitlement leaveentitle = (LeaveEntitlement)
-		 * iterator.next(); System.out.println(leaveentitle); if(leaveentitle.getRole()
-		 * == leaveapp.getEmployee().getRole() &&
-		 * leaveentitle.getType()==leaveapp.getLeaveentitlement().getType()) {
-		 * leaveEntitlementResult = leaveentitle; } } LeaveBalance leavebal =
-		 * lbrepo.findLeaveBalance(leaveapp.getEmployee().getId(),
-		 * leaveEntitlementResult.getId());
-		 * 
-		 * int leavebalance = leavebal.getBalance(); 
-		 */
-		System.out.println(leaveapp);
-		
+		System.out.println(leaveapp);	
 		Date startDate = leaveapp.getStart_date();
 		Date endDate = leaveapp.getEnd_date();
-		
-		
-		if(endDate.before(startDate)){		
-			System.out.println("StartDate is before EndDate");
-			return false;
-		}
-		
-		if(isUnique(leaveapp.getEmployee().getId(),startDate,endDate)) {
+		String type=leaveapp.getLeaveentitlement().getType().getType();
+
+		if(isUnique(leaveapp.getEmployee().getId(),startDate,endDate,type)) {
 			return true;
 		}
-		/*
-		 * int duration = countDuration(startDate,endDate);
-		 * 
-		 * if(leavebal.getLeaveentitlement().getType().equals(LeaveType.MEDICAL)) {
-		 * 
-		 * if(leavebalance < duration)
-		 * 
-		 * System.out.println("Insufficient Medical Leave"); return false; }
-		 * if(leavebal.getLeaveentitlement().getType().equals(LeaveType.ANNUAL)) {
-		 * 
-		 * if(leavebalance < (duration - countNumWeekends(startDate,endDate)))
-		 * 
-		 * return false; }
-		 */	
 		return false;
 	}
 	
 	@Override
-	public boolean isUnique(int id,Date startDate,Date endDate) {
+	public boolean isUnique(int id,Date startDate,Date endDate,String type) {
 
 		List<LeaveApplication> leaveList = larepo.findLeaveApplicationsByEmployeeId(id);
 		
@@ -112,24 +71,53 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 			if(!(leaveApplication.getStatus().equals(Status.CANCELLED) ||
 					leaveApplication.getStatus().equals(Status.REJECTED)
 					)) {
-				
-				//leaveApplication.getEnd_date().equals(endDate)
-				
-				if(leaveApplication.getStart_date().equals(startDate)) {
+				//for half day leave
+				if(!type.equalsIgnoreCase("Compensation")){
+					if(startDate.equals(endDate)) {
+						System.out.println("Condition -1");
+						return false;
+				}}
+				///for no change in date
+				else if(leaveApplication.getStart_date().equals(startDate) && leaveApplication.getId() == id && leaveApplication.getEnd_date().equals(endDate)) {
 					System.out.println("Condition0");
-					return false;
+					return true;
 				}
-
-				else if(endDate.before(leaveApplication.getStart_date())){
+//				new start date 05/05/2020 end date 05-05-2030
+//				exit start date 04-05-2020  end date 06-05-2020			
+///             for start date is  within existing date range
+				if (startDate.before(
+						leaveApplication.getEnd_date())  && startDate.after(leaveApplication.getStart_date()) ){
 					System.out.println("Condition1");
+					return false;	
+				}
+//				new start date 05/05/2020 end date 06-05-2030
+//				exit start date 05-05-2020  end date 07-05-2020					
+				if (startDate.before(
+						leaveApplication.getEnd_date())  && startDate.equals(leaveApplication.getStart_date()) ){
+					System.out.println("Condition1");
+					return false;	
+				}
+				
+//				new start date 02/05/2020 end date 05-05-2030
+//				exit start date 04-05-2020  end date 06-05-2020
+///             for end date is  within existing date range
+				
+				if (endDate.after(leaveApplication.getStart_date()) && endDate.before(leaveApplication.getEnd_date())){
+					System.out.println("Condition2");
 					return false;
 				}
-				else if(!(startDate.after(leaveApplication.getEnd_date()))){
+				
+//				new start date 02/05/2020 end date 05-05-2030
+//				exit start date 04-05-2020  end date 05-05-2020
+///             for start date is  equals with existing end date range
+
+				if (endDate.after(leaveApplication.getStart_date()) && endDate.equals(leaveApplication.getEnd_date())){
 					System.out.println("Condition2");
-					return false;		
+					return false;
 				}
+		
 			}		
-		}
+		} 
 		System.out.println("Current Leave Application is unique!");	
 		return true;
 	}
@@ -189,3 +177,6 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 		return (ArrayList<LeaveApplication>) larepo.findLeaveApplicationsByEmployeeId(id);	}
 
 }
+
+
+

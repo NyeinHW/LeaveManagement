@@ -51,8 +51,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public Employee findEmployeeByName(String name) {
-		return erepo.findEmployeeByName(name);
+	public Employee findEmployeeByUsername(String name) {
+		return erepo.findEmployeeByUsername(name);
 	}
 	
 	  @Override

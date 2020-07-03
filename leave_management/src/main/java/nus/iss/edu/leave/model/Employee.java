@@ -25,8 +25,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Employee {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+
 	private int id;	
-	@NotEmpty
 	private String name;	
 	@NotEmpty
 	private String username;	
@@ -60,6 +60,7 @@ public class Employee {
 	
 	public Employee(@NotEmpty String name, @NotEmpty @Length(min = 8) String password, @NotEmpty String username, int contact_no,
 			@Email String email, String address, Role role, Date doh/*, Employee manager*/) {
+
 		this.name = name;
 		this.username = username;
 		this.password = password;
@@ -70,23 +71,7 @@ public class Employee {
 		this.doh = doh;
 		//this.manager = manager;
 	}
-	
-	public Employee(@NotEmpty String name, @NotEmpty @Length(min = 8) String password, @NotEmpty String username, int contact_no,
-			@Email String email, String address, Role role, Date doh, int manager_id, LeaveApplication leaveapplication,
-			LeaveBalance leavebalance) {
-		super();
-		this.name = name;
-		this.username = username;
-		this.password = password;
-		this.contact_no = contact_no;
-		this.email = email;
-		this.address = address;
-		this.role = role;
-		this.doh = doh;
-		//this.manager_id = manager_id;
-		this.leaveapplication = (List<LeaveApplication>) leaveapplication;
-		this.leavebalance = (List<LeaveBalance>) leavebalance;
-	}
+
 
 	public int getId() {
 		return id;
@@ -99,6 +84,12 @@ public class Employee {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getPassword() {
 		return password;
@@ -136,13 +127,6 @@ public class Employee {
 	public void setDoh(Date doh) {
 		this.doh = doh;
 	}
-//	public int getManager_id() {
-//		return manager_id;
-//	}
-//	public void setManager_id(int manager_id) {
-//		this.manager_id = manager_id;
-//	}
-	
 	public Employee getManager() {
 		return manager;
 	}
@@ -154,27 +138,27 @@ public class Employee {
 	public String getUsername() {
 		return username;
 	}
+	public List<LeaveApplication> getLeaveapplication() {
+		return leaveapplication;
+	}
+	public void setLeaveapplication(List<LeaveApplication> leaveapplication) {
+		this.leaveapplication = leaveapplication;
 
-	public void setUsername(String username) {
-		this.username = username;
 	}
-	
-	public LeaveApplication getLeaveapplication() {
-		return (LeaveApplication) leaveapplication;
+	public List<LeaveBalance> getLeavebalance() {
+		return leavebalance;
 	}
-	public void setLeaveapplication(LeaveApplication leaveapplication) {
-		this.leaveapplication = (List<LeaveApplication>) leaveapplication;
+	public void setLeavebalance(List<LeaveBalance> leavebalance) {
+		this.leavebalance = leavebalance;
 	}
-	public LeaveBalance getLeavebalance() {
-		return (LeaveBalance) leavebalance;
-	}
-	public void setLeavebalance(LeaveBalance leavebalance) {
-		this.leavebalance = (List<LeaveBalance>) leavebalance;
+	public int getId() {
+		return id;
 	}
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", name=" + name + ", password=" + password + ", contact_no=" + contact_no
-				+ ", email=" + email + ", address=" + address + ", role=" + role + ", doh=" + doh + "]";
+		return "Employee [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password
+				+ ", contact_no=" + contact_no + ", email=" + email + ", address=" + address + ", role=" + role
+				+ ", doh=" + doh "]";
 	}
 	
 }

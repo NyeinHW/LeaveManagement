@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -37,12 +38,13 @@ public class LeaveApplication {
 	private String work_dissemination;
 	@ManyToOne
 	private Employee employee;
-	@OneToOne
+	@ManyToOne
 	private LeaveEntitlement leaveentitlement;
+	
 	public LeaveApplication() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
+	
 	public LeaveApplication(String reason, Date start_date, Date end_date, Status status, String manager_cmt) {
 		super();
 		this.reason = reason;
@@ -51,8 +53,6 @@ public class LeaveApplication {
 		this.status = status;
 		this.manager_cmt = manager_cmt;
 	}
-	
-	
 	
 	public LeaveApplication(String reason, Date start_date, Date end_date, Status status, String manager_cmt,
 			String work_dissemination, Employee employee, LeaveEntitlement leaveentitlement) {

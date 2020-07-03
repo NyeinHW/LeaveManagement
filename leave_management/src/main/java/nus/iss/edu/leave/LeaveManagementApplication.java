@@ -26,25 +26,27 @@ import nus.iss.edu.leave.repo.EmployeeRepository;
 import nus.iss.edu.leave.repo.LeaveApplicationRepository;
 import nus.iss.edu.leave.repo.LeaveBalanceRepository;
 import nus.iss.edu.leave.repo.LeaveEntitlementRepository;
-
+import nus.iss.edu.leave.repo.LeaveTypeRepository;
 
 @SpringBootApplication
 public class LeaveManagementApplication {
-	
+
 	@Autowired
 	EmployeeRepository erepo;
 	@Autowired
 	private LeaveApplicationRepository lrepo;
 	@Autowired
 	LeaveEntitlementRepository lerepo;	
+
 	@Autowired
 	LeaveBalanceRepository lbrepo;
-	
+
+	@Autowired
+	LeaveTypeRepository ltrepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(LeaveManagementApplication.class, args);
 	}
-	
 	
 	  @Bean public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 	  return args ->{
@@ -100,5 +102,4 @@ public class LeaveManagementApplication {
 	  };
 	  
 	  }
-	 
 }

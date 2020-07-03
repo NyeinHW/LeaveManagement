@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>User Listing Page</title>
+</head>
+<body>
+	<h1>User Listing</h1>
+	<h2>This is from Session</h2>
+	<h2 th:utext="${session.display}">Session Data</h2>
+	<table class="w3-container" th:if="${not #lists.isEmpty(employee)}">
+		<tr th:each="emlpoyee:${employee}">
+			<td th:text=${employee.id}>Id</td>
+			<td th:text=${employee.name}>Name</td>
+			<td th:text=${employee.leavebalance}>leavebalance</td>
+		</tr>
+	</table>
+</body>
+</html>
