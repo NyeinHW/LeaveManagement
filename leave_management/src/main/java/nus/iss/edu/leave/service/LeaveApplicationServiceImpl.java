@@ -204,7 +204,8 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 	  
 		if(leavebal.getLeaveentitlement().getType().getType().equalsIgnoreCase("MEDICAL")) {
 		  
-		  if(leavebalance < duration && duration > 60) {
+			//check if duration < 60 days			
+		  if(leavebalance < duration && duration > leaveentilement.getLeave_count()) {
 			  System.out.println("Insufficient Medical Leave"); 
 			  return false; 
 		  }
