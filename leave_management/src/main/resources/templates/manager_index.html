@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>View applications</title>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/style.css" th:href="@{/css/style.css}" />
+<title th:utext="#{view.title}">View applications</title>
+</head>
+<body>
+    <h1>Manager Home Page</h1>
+  
+
+    <h2>
+        <a href=" " th:href="@{/employee/manager/application/}+${manager_id}"> Approve or Reject</a>
+    </h2>
+    <h2>
+        <a href=" " th:href="@{/employee/manager/list/}+${manager_id}"> All Applications</a>
+    </h2>
+    <!--  
+    <h2>
+        <a href=" " th:href="@{/manager/application}"> Approve or Reject</a>
+    </h2>
+    <h2>
+        <a href=" " th:href="@{/manager/list}"> All Applications</a>
+    </h2> -->
+    
+
+
+</body>
+</html>

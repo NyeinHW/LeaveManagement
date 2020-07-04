@@ -1,16 +1,23 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Leave Management System</title>
-<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
-</head>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/style.css}" />
+	<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/custom.css}" />
+	<link th:href="@{/css/styles.css}" rel="stylesheet">
+	
 <body>
 	<header th:insert="fragments/general.html :: header"> </header>
-<div class="btn_login">
-<a href="employeelogin.html"
+<div class="login">
+<a class="login1" href="employeelogin.html"
 				 th:href="@{/employee/loginpage}">Employee Login</a>
 <a href="adminlogin.html"
 				 th:href="@{/admin/login}">Admin Login</a>	
-	</div>
-	<div th:replace="fragments/general.html :: footer"></div>
-</body>
+</div>
+	<footer class="footer">
+		 <small>Now is: <b
+			th:text="${execInfo.now.time}"></b></small> <br /> <small>(c)Leave Management
+			System , ISS, NUS 2020</small>
+	</footer></body>
 </html>

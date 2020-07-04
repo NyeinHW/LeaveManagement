@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +73,7 @@ public class EmployeeController {
 	}
 
 	@RequestMapping(value = "/login")
-	public String login(@ModelAttribute ("employee") @Valid Employee emp, BindingResult result, Model model,HttpServletRequest request) {
+	public String login(@ModelAttribute ("employee") @Valid Employee emp, BindingResult result, Model model,HttpServletRequest request,HttpSession session) {
 
 		if (result.hasErrors())
 		{
@@ -92,7 +93,9 @@ public class EmployeeController {
 				
 				if(employee.getRole()==Role.MANAGER) {
 					System.out.println("it is manager");
-					return "forward:/manager/list";
+					session.setAttribute("managerId", employee.getId());
+					System.out.println("id is"+employee.getId());
+					return "forward:/employee/manager/first";
 				}
 				if(employee.getRole()==Role.STAFF) {
 					System.out.println("role is"+employee.getRole());
@@ -104,7 +107,13 @@ public class EmployeeController {
 		//include error page.
 		return "forward:/employee/loginpage";
 	}
-
+//    @RequestMapping(value="/manager/first")
+//    public String home(Model model,HttpServletRequest request) {
+//		int manager_id = (Integer) request.getAttribute("managerId");
+//   	System.out.println("manager id is"+manager_id);
+//    	model.addAttribute("manager_id",manager_id);
+//        return "manager_index";
+//    }
 	@RequestMapping(value = "/applyLeave/{empid}") 
 	public String applyLeave (@PathVariable ("empid") Integer id,  @ModelAttribute("leaveapplication") LeaveApplication la,Model model) {
 		int empid = (Integer) id; 

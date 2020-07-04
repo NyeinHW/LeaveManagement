@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1> Update Leave</h1>
-<form action='#' th:object="${leaveapplication}" th:action="@{/manager/approve}" method="post">
+<form action='#' th:object="${leaveapplication}" th:action="@{/employee/manager/approve}" method="post">
 		<fieldset>
 			Manager Comment:
 			<textarea th:field="*{manager_cmt}" cols="30" rows="10"

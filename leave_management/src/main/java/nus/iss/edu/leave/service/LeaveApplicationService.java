@@ -17,6 +17,7 @@ public interface LeaveApplicationService {
 	public void cancelLeaveApplication(LeaveApplication leaveApplication);
 	public ArrayList<LeaveApplication> findAllLeaveApplicationByEmployeeId(Integer id);
 	public boolean isUnique(int id,Date startDate,Date endDate,String type);
+	public void approvedLeaveApplication(LeaveApplication leaveApplication);
+	public void rejectedLeaveApplication(LeaveApplication leaveApplication);
 	public boolean checkBalance(LeaveApplication leaveapp, LeaveEntitlement leaveentilement);
-
 }

@@ -5,11 +5,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+<header th:insert="fragments/general.html :: header"> </header>
+
 <div th:fragment="header" id="header" class="employee_div">
 		
 				<!--  <td width="15%"><img th:src="@{/image/leave.jpg}" /></td>-->
 			<h3>Welcome User</h3>
-				<input type="button" class="emp_btn" value="Logout"
+				<input type="button" class="emp_btn" style="height:30px;"value="Logout"
 					onclick="window.location.href='/'; return false"
 		 /> 
 		
