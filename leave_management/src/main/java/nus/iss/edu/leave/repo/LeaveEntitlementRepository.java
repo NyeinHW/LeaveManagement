@@ -6,11 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import nus.iss.edu.leave.model.LeaveEntitlement;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import nus.iss.edu.leave.model.LeaveEntitlement;
-import nus.iss.edu.leave.model.LeaveType;
 import nus.iss.edu.leave.model.Role;
 
 public interface LeaveEntitlementRepository extends JpaRepository<LeaveEntitlement, Integer> {
-
+  
 	public List<LeaveEntitlement> findByLeavetype(LeaveType lt);
+
 }

@@ -103,10 +103,9 @@ public class LeaveApplicationController {
 			}
 		}
 		
-		
 		System.out.println(" leaveEntitlementResult "+leaveEntitlementResult);
 		
-		if(lservice.leaveValidation(la))
+		if(lservice.leaveValidation(la) && lservice.checkBalance(la, leaveEntitlementResult))
 		{
 			request.setAttribute("empid", emp.getId());
 			la.setLeaveentitlement(leaveEntitlementResult);
