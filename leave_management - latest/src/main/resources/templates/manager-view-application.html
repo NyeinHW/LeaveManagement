@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>View applications</title>
+<link rel="stylesheet" type="text/css" media="all"
+    href="../../css/style.css" th:href="@{/css/style.css}" />
+<title th:utext="#{view.title}">View applications</title>
+</head>
+<body>
+    <h1>View Applications</h1>
+    <h2>Application List</h2>
+
+ 
+
+    <table th:if="${not #lists.isEmpty(leaveApplications)}">
+
+ 
+
+        <tr>
+            <th>Id</th>
+            <th>reason</th>
+            <th>start_date</th>
+            <th>end_date</th>
+            <th>Status</th>
+            <th>manager_cmt</th>
+            <th>work_dissemination</th>
+            <th>employee</th>
+            <th>type</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+
+ 
+
+        <tr th:each="leaveApplication:${leaveApplications}" class="table-row">
+
+ 
+
+            <td th:text=${leaveApplication.id}>Id</td>
+            <td th:text=${leaveApplication.reason}>reason</td>
+            <td
+                th:text="${#dates.format(leaveApplication.start_date, 'dd-MM-yyyy')}">start_date</td>
+            <td
+                th:text="${#dates.format(leaveApplication.end_date, 'dd-MM-yyyy')}">end_date</td>
+            <td th:text=${leaveApplication.status}>Status</td>
+            <td th:text=${leaveApplication.manager_cmt}>manager_cmt</td>
+            <td th:text=${leaveApplication.work_dissemination}>work_dissemination</td>
+            <td th:text=${leaveApplication.employee.name}>employee</td>
+            <td th:text=${leaveApplication.leaveentitlement.type.type}>type</td>
+
+ 
+
+            <td><a href=" "
+                th:href="@{/employee/manager/approve/}+${leaveApplication.id}"> Approve</a></td>
+            <td><a href="reject-application.html"
+                th:href="@{/employee/manager/reject/}+${leaveApplication.id}"> Reject</a></td>
+            <td><a href=" "
+                th:href="@{/manager/listByTime/}+${leaveApplication.start_date}+@{/}+${leaveApplication.end_date}"> Same period Applications</a></td>
+        </tr>
+    </table>
+
+ 
+
+
+</body>
+</html>
