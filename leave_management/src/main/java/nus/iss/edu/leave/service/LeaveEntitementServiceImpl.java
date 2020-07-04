@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import nus.iss.edu.leave.model.LeaveEntitlement;
+import nus.iss.edu.leave.model.LeaveType;
 import nus.iss.edu.leave.model.Role;
 import nus.iss.edu.leave.repo.LeaveEntitlementRepository;
 
@@ -29,11 +30,12 @@ public class LeaveEntitementServiceImpl implements LeaveEntitlementService {
 		return leRepo.findById(id).get();
 	}
 
-	@Override
-	public LeaveEntitlement findLeaveEntitlementByType(String type,Role role) {
-		
-		return null;
-	}
+	/*
+	 * @Override public LeaveEntitlement findLeaveEntitlementByType(LeaveType
+	 * type,Role role) {
+	 * 
+	 * return leRepo.findLeaveEntitlementByType(role, type.getId()); }
+	 */
 
 	@Transactional
 	public void deleteLeaveEntitlement(LeaveEntitlement LeaveEntitlement) {

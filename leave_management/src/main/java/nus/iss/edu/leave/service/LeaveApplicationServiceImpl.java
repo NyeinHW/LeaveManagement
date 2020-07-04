@@ -1,7 +1,6 @@
 package nus.iss.edu.leave.service;
 
 
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
@@ -28,7 +27,6 @@ import nus.iss.edu.leave.model.Status;
 import nus.iss.edu.leave.repo.LeaveApplicationRepository;
 import nus.iss.edu.leave.repo.LeaveBalanceRepository;
 import nus.iss.edu.leave.repo.LeaveEntitlementRepository;
-import nus.iss.edu.leave.validator.LeaveApplicationValidator;
 
 @Service
 public class LeaveApplicationServiceImpl implements LeaveApplicationService {
@@ -195,7 +193,48 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 	public ArrayList<LeaveApplication> findAllLeaveApplicationByEmployeeId(Integer id) {
 		
 		return (ArrayList<LeaveApplication>) larepo.findLeaveApplicationsByEmployeeId(id);	}
-
+	
+	@Override
+	public boolean checkBalance(LeaveApplication leaveapp, LeaveEntitlement leaveentilement) {
+		
+		LeaveBalance leavebal = lbrepo.findLeaveBalance(leaveapp.getEmployee().getId(),leaveentilement.getId());
+		
+		System.out.println(leavebal);
+		
+		int leavebalance = leavebal.getBalance(); 
+		 
+		System.out.println(leaveapp);
+		
+		Date startDate = leaveapp.getStart_date();
+		Date endDate = leaveapp.getEnd_date();
+		
+		int duration = countDuration(startDate,endDate);
+		System.out.println(duration);
+//		int numberweekends = countNumWeekends(startDate,endDate);
+//		System.out.println("num weekend: " + numberweekends);
+	  
+		if(leavebal.getLeaveentitlement().getType().getType().equalsIgnoreCase("MEDICAL")) {
+		  
+			//check if duration < 60 days			
+		  if(leavebalance < duration && duration > leaveentilement.getLeave_count()) {
+			  System.out.println("Insufficient Medical Leave"); 
+			  return false; 
+		  }
+		}
+		  
+		if(leavebal.getLeaveentitlement().getType().getType().equalsIgnoreCase("ANNUAL")) {
+		  
+			/*
+			 * if(leavebalance < (duration - numberweekends)) {
+			 * System.out.println("Annual leave not enough"); return false; }
+			 */
+			  if(leavebalance < duration) {
+				  System.out.println("Annual leave not enough");
+				  return false;
+			  }
+		}	 	
+		return true;
+	}
 }
 
 

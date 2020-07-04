@@ -5,6 +5,7 @@ import java.util.Date;
 
 import nus.iss.edu.leave.model.LeaveApplication;
 import nus.iss.edu.leave.model.LeaveBalance;
+import nus.iss.edu.leave.model.LeaveEntitlement;
 
 public interface LeaveApplicationService {
 	
@@ -18,5 +19,5 @@ public interface LeaveApplicationService {
 	public boolean isUnique(int id,Date startDate,Date endDate,String type);
 	public void approvedLeaveApplication(LeaveApplication leaveApplication);
 	public void rejectedLeaveApplication(LeaveApplication leaveApplication);
-
+	public boolean checkBalance(LeaveApplication leaveapp, LeaveEntitlement leaveentilement);
 }
