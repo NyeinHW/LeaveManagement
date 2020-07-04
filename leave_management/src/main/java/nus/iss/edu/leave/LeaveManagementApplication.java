@@ -104,9 +104,12 @@ public class LeaveManagementApplication {
 		  
 		  Employee e3 = new Employee("Dorothy", "nyein", "123456789", 92743748, "dorothy-admin@gmail.com", "Lucky Avenue", Role.STAFF, date);
 		  Employee e4 = new Employee("Dorothy", "hsu", "123456789", 92743748, "dorothy-admin@gmail.com", "Lucky Avenue", Role.ADMIN, date);
+		  Employee e5 = new Employee("wai", "wai", "123456789", 92743748, "dorothy-admin@gmail.com", "Lucky Avenue", Role.MANAGER, date);
 
 		  erepo.save(e3);
 		  erepo.save(e4);
+		  erepo.save(e5);
+
 	  };
 	  
 	  }

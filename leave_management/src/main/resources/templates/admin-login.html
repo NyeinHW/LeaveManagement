@@ -5,9 +5,13 @@
 <title>Employee Login</title>
 <link rel="stylesheet" type="text/css" media="all"
 	href="../../css/style.css" th:href="@{/css/style.css}" />
+	<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/custom.css}" />
 </head>
 <body>
-<h1>Admin Login</h1>
+<header th:insert="fragments/general.html :: header"> </header>
+<div class="login-page">
+<p class="e-header">Admin Login</p1>
     <form action="#" th:object="${employee}" th:action="@{/admin/login}" method="post">
 		<fieldset>
 			Username: <input type="text" th:field="*{username}">
@@ -18,8 +22,11 @@
 			<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
 		</fieldset>
 		<fieldset>
-			<input type="submit" value="login" class="button">
+			<input type="submit" value="login" class="emp_btn" style="margin-left:47%">
 		</fieldset>
 	</form>
+	</div>
+	<footer th:insert="fragments/general.html :: footer"> </footer>
+	
 </body>
 </html>

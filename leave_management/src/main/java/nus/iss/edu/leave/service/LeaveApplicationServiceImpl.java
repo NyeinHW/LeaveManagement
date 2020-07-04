@@ -179,7 +179,18 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 		larepo.save(leaveApplication);
 		
 	}
-
+	@Transactional
+	public void approvedLeaveApplication(LeaveApplication leaveApplication) {
+		leaveApplication.setStatus(Status.APPROVED); 
+		larepo.save(leaveApplication);
+		
+	}
+	@Transactional
+	public void rejectedLeaveApplication(LeaveApplication leaveApplication) {
+		leaveApplication.setStatus(Status.REJECTED); 
+		larepo.save(leaveApplication);
+		
+	}
 	@Override
 	public ArrayList<LeaveApplication> findAllLeaveApplicationByEmployeeId(Integer id) {
 		
