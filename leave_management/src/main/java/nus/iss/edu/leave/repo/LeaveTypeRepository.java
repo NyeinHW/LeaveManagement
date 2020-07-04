@@ -10,4 +10,6 @@ public interface LeaveTypeRepository extends JpaRepository<LeaveType, Integer> {
 	
 	@Query (value="SELECT * FROM LeaveType lt WHERE lt.type = :name" , nativeQuery=true)
 	public LeaveType findLeaveTypeByName(@Param("name") String name);
+	
+	public LeaveType findLeaveTypeById(Integer id);
 }

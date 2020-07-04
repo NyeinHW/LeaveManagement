@@ -20,7 +20,7 @@ public class LeaveType {
 	@NotEmpty
 	private String type; 
 	
-	private int MaxNoOfDays;
+	private String MaxNoOfDays;
 	// Not Employee Leave entitlement, it's the maximum 
 	//number of days in company policy e.g. Medical Leave cannot 
 	//exceed 60 days 
@@ -37,7 +37,7 @@ public class LeaveType {
 		this.type = type;
 	}
 	
-	public LeaveType(String type, int MaxDays) {
+	public LeaveType(String type, String MaxDays) {
 		super();
 		this.type = type;
 		this.MaxNoOfDays = MaxDays;
@@ -67,11 +67,11 @@ public class LeaveType {
 		this.type = type;
 	}
 
-	public int getMaxNoOfDays() {
+	public String getMaxNoOfDays() {
 		return MaxNoOfDays;
 	}
 
-	public void setMaxNoOfDays(int maxNoOfDays) {
+	public void setMaxNoOfDays(String maxNoOfDays) {
 		MaxNoOfDays = maxNoOfDays;
 	}	
 }
