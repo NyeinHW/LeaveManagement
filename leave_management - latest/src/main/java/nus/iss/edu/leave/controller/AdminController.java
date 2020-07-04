@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -101,10 +102,13 @@ public class AdminController {
 	}
 	
 	 @RequestMapping(path = "/createEmployee", method = RequestMethod.POST)
-	    public String createOrUpdateEmployee(@ModelAttribute("employee") @Valid Employee employee, @RequestParam(name= "manager_id")
+	    public String createOrUpdateEmployee(@ModelAttribute("employee") @Valid Employee employee, BindingResult result, @RequestParam(name= "manager_id")
 	 	Integer managerid ) 
 
 	    {
+		 	if(result.hasErrors()) {
+			   return "redirect:/admin/edit";
+			  }
 	        Employee manager = emprepo.findById(managerid).orElse(new Employee());
 	        System.out.print(employee.getDoh());
 	        if(managerid != 0) employee.setManager(manager);

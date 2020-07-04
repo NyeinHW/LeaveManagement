@@ -17,6 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,16 +27,18 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Employee {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-
 	private int id;	
+	@Size(min = 3, max = 50, message="{Name.size}")
 	private String name;	
 	@NotEmpty
+	@Size(min = 3, max = 50, message="{Username.size}")
 	private String username;	
 	@NotEmpty
-	@Length(min=8)
+	@Length(min=8, max=50, message="{passWord.size}")
 	private String password;
+	//@Size(min = 8, max = 10, message = "{phone.size}")
 	private int contact_no;
-	@Email
+	@Email(message="{email.msg}")
 	private String email;
 	private String address;
 	@Enumerated(EnumType.STRING)
@@ -61,8 +64,13 @@ public class Employee {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Employee(String name, @NotEmpty String username, @NotEmpty @Length(min = 8) String password, int contact_no,
-			@Email String email, String address, Role role, Date doh) {
+
+
+	public Employee(@Size(min = 3, max = 50, message = "{Name.size}") String name,
+			@NotEmpty @Size(min = 3, max = 50, message = "{Username.size}") String username,
+			@NotEmpty @Length(min = 8, max = 50, message = "{passWord.size}") String password,
+			@Size(min = 8, max = 10, message = "{phone.size}") int contact_no,
+			@Email(message = "{email.msg}") String email, String address, Role role, Date doh) {
 		super();
 		this.name = name;
 		this.username = username;
@@ -74,11 +82,15 @@ public class Employee {
 		this.doh = doh;
 	}
 
-	public Employee(int id, String name, @NotEmpty String username, @NotEmpty @Length(min = 8) String password,
-			int contact_no, @Email String email, String address, Role role, Date doh, Employee manager,
+
+
+	public Employee(@Size(min = 3, max = 50, message = "{Name.size}") String name,
+			@NotEmpty @Size(min = 3, max = 50, message = "{Username.size}") String username,
+			@NotEmpty @Length(min = 8, max = 50, message = "{passWord.size}") String password,
+			@Size(min = 8, max = 10, message = "{phone.size}") int contact_no,
+			@Email(message = "{email.msg}") String email, String address, Role role, Date doh, Employee manager,
 			List<LeaveApplication> leaveapplication, List<LeaveBalance> leavebalance) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.username = username;
 		this.password = password;

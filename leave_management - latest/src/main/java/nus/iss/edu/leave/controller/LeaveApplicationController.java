@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import nus.iss.edu.leave.model.Employee;
 import nus.iss.edu.leave.model.LeaveApplication;
@@ -68,6 +69,9 @@ public class LeaveApplicationController {
 	{
 		this.empservice = empserviceim;
 	}
+	
+	@Autowired
+    private JavaMailSender javaMailSender;
 
 	@RequestMapping(value = "/lists")
 	public String list(Model model) {
@@ -111,6 +115,7 @@ public class LeaveApplicationController {
 			request.setAttribute("empid", emp.getId());
 			la.setLeaveentitlement(leaveEntitlementResult);
 			lservice.addLeaveApplication(la);
+			sendApplicationEmail(emp.getManager(), la);
 			return "forward:/employee/leave_form/list";
 		}
 		else {
@@ -169,5 +174,22 @@ public class LeaveApplicationController {
 		return "forward:/employee/leave_form/list";
 //		lservice.deleteLeaveApplication(la);
 	}
+	
+    public void sendApplicationEmail(Employee manager, LeaveApplication la) {
+    	
+    	String email = manager.getEmail();
+    	String AppId = Integer.toString(la.getId());
+    	String applicant = la.getEmployee().getName(); 
+    		SimpleMailMessage msg = new SimpleMailMessage();
+            msg.setTo(email);
+
+            msg.setSubject("[NOTIFICATION] Leave Application #" + AppId);
+            msg.setText(applicant + " has submitted a leave application for your approval.");
+            javaMailSender.send(msg);
+    	}
+        
+    }
+	
+
     
-}
+

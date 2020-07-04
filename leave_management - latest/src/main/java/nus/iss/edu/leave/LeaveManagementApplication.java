@@ -1,21 +1,15 @@
 package nus.iss.edu.leave;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.validation.constraints.NotEmpty;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 
 import nus.iss.edu.leave.model.Employee;
-
 import nus.iss.edu.leave.model.LeaveApplication;
 import nus.iss.edu.leave.model.LeaveBalance;
 import nus.iss.edu.leave.model.LeaveEntitlement;
@@ -43,10 +37,17 @@ public class LeaveManagementApplication {
 
 	@Autowired
 	LeaveTypeRepository ltrepo;
+	
+
+	
 
 	public static void main(String[] args) {
 		SpringApplication.run(LeaveManagementApplication.class, args);
+		
 	}
+	
+
+
 	
 	  @Bean public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 	  return args ->{
@@ -61,7 +62,7 @@ public class LeaveManagementApplication {
 		  java.util.Date date=new java.util.Date(millis);  
 		  LeaveEntitlement le5=new LeaveEntitlement(medical,Role.STAFF,12);
 		  
-		  Employee e1=new Employee("John","123456789", "john-sales", 1,"john_sales@gmail.com","Sunset Avenue",Role.MANAGER,date);
+		  Employee e1=new Employee("John","123456789", "john-sales", 93456788,"john_sales@gmail.com","Sunset Avenue",Role.MANAGER,date);
 
 		  LeaveApplication la1=new LeaveApplication("not",date,date,Status.UPDATED,"not sure","hello",e1,le5);
 
@@ -104,15 +105,19 @@ public class LeaveManagementApplication {
 
 
 		  
-		  Employee e3 = new Employee("Dorothy", "nyein", "123456789", 92743748, "dorothy-admin@gmail.com", "Lucky Avenue", Role.STAFF, date);
-		  Employee e4 = new Employee("Dorothy", "hsu", "123456789", 92743748, "dorothy-admin@gmail.com", "Lucky Avenue", Role.ADMIN, date);
-		  Employee e5 = new Employee("wai", "wai", "123456789", 92743748, "dorothy-admin@gmail.com", "Lucky Avenue", Role.MANAGER, date);
+		  Employee e3 = new Employee("Dorothy", "Dorothy-Sales", "123456789", 92743748, "dorothy-admin@gmail.com", "Lucky Avenue", Role.STAFF, date);
+		  Employee e4 = new Employee("Elphaba", "Elphaba-Sales", "123456789", 92743748, "dorothy-admin@gmail.com", "Lucky Avenue", Role.ADMIN, date);
+		  Employee e5 = new Employee("Glida", "Glinda-Sales", "123456789", 92743748, "dorothy-admin@gmail.com", "Lucky Avenue", Role.MANAGER, date);
 
 		  erepo.save(e3);
 		  erepo.save(e4);
 		  erepo.save(e5);
-
+		  
 	  };
 	  
+	
+
+	    }
+	  	  		
+	    
 	  }
-}
