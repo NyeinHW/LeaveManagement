@@ -50,9 +50,11 @@ public class Employee {
 	public Employee manager; 
 	
 	@OneToMany(mappedBy="employee", cascade = CascadeType.ALL)
-	private List<LeaveApplication> leaveapplication;
+	private List<LeaveApplication> leaveapplication;	
+
 	@OneToMany(mappedBy="employee")
 	private List<LeaveBalance> leavebalance;
+	
 	
 	public Employee() {
 		super();

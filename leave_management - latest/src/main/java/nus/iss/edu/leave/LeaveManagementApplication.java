@@ -60,6 +60,7 @@ public class LeaveManagementApplication {
 		  long millis=System.currentTimeMillis();  
 		  java.util.Date date=new java.util.Date(millis);  
 		  LeaveEntitlement le5=new LeaveEntitlement(medical,Role.STAFF,12);
+		  
 		  Employee e1=new Employee("John","123456789", "john-sales", 1,"john_sales@gmail.com","Sunset Avenue",Role.MANAGER,date);
 
 		  LeaveApplication la1=new LeaveApplication("not",date,date,Status.UPDATED,"not sure","hello",e1,le5);
@@ -67,6 +68,19 @@ public class LeaveManagementApplication {
 		  LeaveApplication la2=new LeaveApplication("hello",date,date,Status.APPROVED,"ok","hello",e1,le5);
 		  LeaveApplication la3=new LeaveApplication("hello",date,date,Status.REJECTED,"ok","hello",e1,le5);
 
+		  LeaveEntitlement le1 = new LeaveEntitlement();
+		  LeaveEntitlement le2 = new LeaveEntitlement();
+
+		  le1.setLeave_count(18);
+		  le1.setRole(Role.STAFF);
+		  le1.setType(annual);
+		  
+		  le2.setLeave_count(60);
+		  le2.setRole(Role.STAFF);
+		  le2.setType(medical);
+		  
+		  lerepo.save(le1);
+		  lerepo.save(le2);
 		  erepo.save(e1);
 		  lerepo.save(le5);
 		  lrepo.save(la1);
@@ -84,24 +98,11 @@ public class LeaveManagementApplication {
 		  e2.setManager(e1);
 		  erepo.save(e2);
 
-		  LeaveEntitlement le1 = new LeaveEntitlement();
-		  LeaveEntitlement le2 = new LeaveEntitlement();
-
-		  le1.setLeave_count(18);
-		  le1.setRole(Role.STAFF);
-		  le1.setType(annual);
-
-		  le2.setLeave_count(60);
-		  le2.setRole(Role.STAFF);
-		  le2.setType(medical);
-
-		  lerepo.save(le1); lerepo.save(le2);
 
 		  LeaveBalance lb1 = new LeaveBalance(1,e2,le1,10);
 		  LeaveBalance lb2 = new LeaveBalance(2,e2,le2,10);
 
 
-		  lbrepo.save(lb1); lbrepo.save(lb2);
 		  
 		  Employee e3 = new Employee("Dorothy", "nyein", "123456789", 92743748, "dorothy-admin@gmail.com", "Lucky Avenue", Role.STAFF, date);
 		  Employee e4 = new Employee("Dorothy", "hsu", "123456789", 92743748, "dorothy-admin@gmail.com", "Lucky Avenue", Role.ADMIN, date);

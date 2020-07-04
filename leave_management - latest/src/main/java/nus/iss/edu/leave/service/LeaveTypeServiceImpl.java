@@ -74,14 +74,15 @@ public class LeaveTypeServiceImpl implements LeaveTypeService {
 		
 	
 	
-	@Override 
-	public void deleteLeaveType(Integer id) {
-		LeaveType lt = ltrepo.findLeaveTypeById(id);
-		List<LeaveEntitlement> entitlements = lerepo.findByLeavetype(lt);
-		for (LeaveEntitlement le : entitlements) {
-			le.setType(null); 
-		}
-		ltrepo.delete(lt);
-	}
+//	@Override 
+//	public void deleteLeaveType(Integer id) {
+//		LeaveType lt = ltrepo.findLeaveTypeById(id);
+//		List<LeaveEntitlement> entitlements = lerepo.findByLeavetype(lt);
+//		for (LeaveEntitlement le : entitlements) {
+//			le.setType(null); 
+//		}
+//		ltrepo.delete(lt);
+//	}
+	
 	
 }

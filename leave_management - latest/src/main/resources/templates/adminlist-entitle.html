@@ -1,42 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
+ 
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>All Employees</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+ 
 <body>
-<div class="container my-2">
+    <div class="container my-2">
     <div class="card">
     <div class="card-body">
-        <div th:switch="${leavetype}" class="container my-5">
-            <p class="my-5">
-                <a href="/admin/createnewleavetype" class="btn btn-primary">
-                <i class="fas fa-user-plus ml-2"> Add LeaveType </i></a>
-            </p>
+ 	<div th:switch="${leaveentitle}" class="container my-5">
+            
             <div class="col-md-10">
                 <h2 th:case="null">No record found !!</h2>
                 <div th:case="*">
                     <table class="table table-striped table-responsive-md">
                         <thead>
                             <tr>
-                                <th>Type</th>
-                                <th>Max No. Of Days</th>                 
+                                <th>Name</th>
+                                <th>Annual Leave</th>
                                 <th>Edit</th>
 
                             </tr>
                         </thead>
-                        <tbody>
-                     
-                            <tr th:each="l : ${leavetypes}">
+                        <tbody>                           
+                            <tr th:each="l : ${leaveentitle}">
+                                <td th:text="${l.role}"></td>
                                 <td th:text="${l.type}"></td>
-                                <td th:text="${l.MaxNoOfDays}"></td>                               
+                                <td th:text="${l.leave_count}"></td>                          
                                 <td>
-                                    <a th:href="@{/admin/editLeaveType/{id}(id=${l.id})}"
+                                    <a th:href="@{/admin/editleaveentitlements/{id}(id=${l.id})}"
                                              > Edit
                                         <i class="fas fa-user-edit ml-2"></i>
                                     </a>
                                 </td>
-
 
                             </tr>
                         </tbody>
@@ -45,8 +45,9 @@
  
             </div>
         </div>
-    </div>
+        </div>
     </div>
     </div>
 </body>
+ 
 </html>

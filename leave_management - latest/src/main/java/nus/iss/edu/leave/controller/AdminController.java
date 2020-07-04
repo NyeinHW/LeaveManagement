@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 //import nus.iss.edu.leave.model.Admin;
 //import com.example.demo.error.RecordNotFoundException;
 import nus.iss.edu.leave.model.Employee;
+import nus.iss.edu.leave.model.LeaveEntitlement;
 import nus.iss.edu.leave.model.LeaveType;
 import nus.iss.edu.leave.model.Role;
 //import nus.iss.edu.leave.repo.AdminRepository;
@@ -27,6 +28,7 @@ import nus.iss.edu.leave.repo.EmployeeRepository;
 import nus.iss.edu.leave.repo.LeaveTypeRepository;
 import nus.iss.edu.leave.service.EmployeeService;
 import nus.iss.edu.leave.service.EmployeeServiceImpl;
+import nus.iss.edu.leave.service.LeaveEntitlementService;
 import nus.iss.edu.leave.service.LeaveTypeService;
 
 @Controller
@@ -51,6 +53,9 @@ public class AdminController {
 	
 	@Autowired
 	LeaveTypeRepository ltrepo;
+	
+	@Autowired
+	LeaveEntitlementService leservice; 
 	
 	@GetMapping(value = "/login")
 	public String loginPage(Model model) {
@@ -163,11 +168,11 @@ public class AdminController {
 		  return "redirect:/admin/viewleavetype";
 	  }
 	  
-	  @RequestMapping("/deleteLeaveType/{id}")
-	  public String delLeaveType(@PathVariable("id") int id) {
-		  ltservice.deleteLeaveType(id);
-		  return "redirect:/admin/viewleavetype";
-	  }
+//	  @RequestMapping("/deleteLeaveType/{id}")
+//	  public String delLeaveType(@PathVariable("id") int id) {
+//		  ltservice.deleteLeaveType(id);
+//		  return "redirect:/admin/viewleavetype";
+//	  }
 	  
 	  @RequestMapping("/editLeaveType/{id}")
 	  public String editLeaveType(@PathVariable("id") Optional<Integer> id, Model model) {		  	  
@@ -178,6 +183,26 @@ public class AdminController {
 	      else model.addAttribute("leavetype", new LeaveType());
 	      
 	      return "LeaveType-Form";
+	  }
+	  
+	  @RequestMapping("/viewleaveentitlements")
+	  public String viewLeaveEntitlements(Model model) {		  
+		  List<LeaveEntitlement> entitlements = leservice.findAll(); 
+		  model.addAttribute("leaveentitle", entitlements);
+		  return "adminlist-entitle";
+	  }
+	  
+	  @GetMapping("/editleaveentitlements/{id}")
+	  public String editLeaveEntitlements(Model model, @PathVariable("id") Integer id) {		
+		  LeaveEntitlement e = leservice.findLeaveEntitlementById(id);
+		  model.addAttribute("entitlement", e);
+		  return "adminlist-entitleform";
+	  }
+	  
+	  @PostMapping("/editleaveentitlements")
+	  public String updateLE(@ModelAttribute("entitlement") LeaveEntitlement le) {		  		  
+		  leservice.UpdateLE(le); 
+		  return "redirect:/admin/viewleaveentitlements";
 	  }
 	
 }

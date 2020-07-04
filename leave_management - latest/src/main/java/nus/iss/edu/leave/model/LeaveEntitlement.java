@@ -17,6 +17,7 @@ public class LeaveEntitlement {
 	private int id;
 	@ManyToOne
 	private LeaveType leavetype;
+
 	private Role role;
 	private int leave_count;
 	
@@ -30,6 +31,7 @@ public class LeaveEntitlement {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 	public LeaveEntitlement(LeaveType type, Role role, int leave_count) {
 		super();
 		this.leavetype = type;

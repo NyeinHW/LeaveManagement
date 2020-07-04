@@ -9,5 +9,5 @@ public interface LeaveTypeService {
 	public LeaveType findLeaveTypeByName(String name);
 	public ArrayList<LeaveType> findAllLeaveType();
 	public void createOrUpdateLeaveType(LeaveType newleavetype);
-	public void deleteLeaveType(Integer id);
+//	public void deleteLeaveType(Integer id);
 }
