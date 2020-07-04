@@ -1,5 +1,6 @@
 package nus.iss.edu.leave.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,7 +9,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,8 +24,10 @@ import nus.iss.edu.leave.model.LeaveType;
 import nus.iss.edu.leave.model.Role;
 //import nus.iss.edu.leave.repo.AdminRepository;
 import nus.iss.edu.leave.repo.EmployeeRepository;
+import nus.iss.edu.leave.repo.LeaveTypeRepository;
 import nus.iss.edu.leave.service.EmployeeService;
 import nus.iss.edu.leave.service.EmployeeServiceImpl;
+import nus.iss.edu.leave.service.LeaveTypeService;
 
 @Controller
 @RequestMapping("/admin")
@@ -33,6 +35,10 @@ public class AdminController {
 	
 	@Autowired
 	protected EmployeeService empservice;
+	
+	@Autowired
+	protected LeaveTypeService ltservice;  
+	
 
 	@Autowired
 	public void setEmployeeService (EmployeeServiceImpl empserviceim)
@@ -42,6 +48,9 @@ public class AdminController {
 	
 	@Autowired 
 	EmployeeRepository emprepo;
+	
+	@Autowired
+	LeaveTypeRepository ltrepo;
 	
 	@GetMapping(value = "/login")
 	public String loginPage(Model model) {
@@ -121,16 +130,54 @@ public class AdminController {
 		  return "redirect:/admin/viewemployees";
 	  }
 	  
-	  @RequestMapping("/manage-leavetype")
-	  public String manageLeaveType(Model model) {		  		  
-		  //model.addAttribute("leavetype", leavetype);
-		  return "manage-leave-type";
+//	  @RequestMapping("/manage-leavetype")
+//	  public String manageLeaveType(Model model) {		  		  
+//		  //model.addAttribute("leavetype", leavetype);
+//		  return "manage-leave-type";
+//	  }
+//	  
+//	  @PostMapping("/manage-leavetype")
+//	  public String submitLeaveType(@RequestParam("newleavetype") String newleave, LeaveType leavetype) {
+//		  
+//		  return "redirect:/admin/viewemployees";
+//	  }
+	  
+	  @RequestMapping("/viewleavetype")
+	  public String LeaveTypeDisplay(Model model) {	  
+		  System.out.println("reached leave type controller");
+		  ArrayList<LeaveType> allleavet = ltservice.findAllLeaveType();
+		  model.addAttribute("leavetype", new LeaveType()); 
+		  model.addAttribute("leavetypes", allleavet); 		  
+		  return "leave-type-panel";
 	  }
 	  
-	  @PostMapping("/manage-leavetype")
-	  public String submitLeaveType(@RequestParam("newleavetype") String newleave, LeaveType leavetype) {
-		  
-		  return "redirect:/admin/viewemployees";
+	  @GetMapping("/createnewleavetype")
+	  public String createLeaveTypePage(Model model) {
+		  model.addAttribute("leavetype", new LeaveType()); 
+		  return "LeaveType-Form";
+	  }
+	  
+	  @PostMapping("/createnewleavetype")
+	  public String createLeaveType(@ModelAttribute("leavetype") LeaveType newleavetype) {
+		  ltservice.createOrUpdateLeaveType(newleavetype); 
+		  return "redirect:/admin/viewleavetype";
+	  }
+	  
+	  @RequestMapping("/deleteLeaveType/{id}")
+	  public String delLeaveType(@PathVariable("id") int id) {
+		  ltservice.deleteLeaveType(id);
+		  return "redirect:/admin/viewleavetype";
+	  }
+	  
+	  @RequestMapping("/editLeaveType/{id}")
+	  public String editLeaveType(@PathVariable("id") Optional<Integer> id, Model model) {		  	  
+	      if (id.isPresent()) {
+	    	  Optional<LeaveType> lt = ltrepo.findById(id.get());
+	    	  model.addAttribute("leavetype", lt);
+	      }
+	      else model.addAttribute("leavetype", new LeaveType());
+	      
+	      return "LeaveType-Form";
 	  }
 	
 }
