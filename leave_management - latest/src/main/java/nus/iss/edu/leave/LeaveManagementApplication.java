@@ -94,7 +94,7 @@ public class LeaveManagementApplication {
 		  e2.setContact_no(95185999);	  
 		  e2.setName("sam");
 		  e2.setPassword("1235679800"); 
-		  e2.setEmail("acbc@gmail.com");
+		  e2.setEmail("ledeffect94@gmail.com");
 		  e2.setRole(Role.MANAGER);
 		  e2.setManager(e1);
 		  erepo.save(e2);
