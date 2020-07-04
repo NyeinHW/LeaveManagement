@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" media="all" href="../../css/style1.css" data-th-href="@{/css/style1.css}" />
+</head>
+<body>
+<h1>Add Public Holiday Details</h1>
+<form action="#" th:object="${publicholiday}" th:action="@{/publicholiday/save}" method="POST">
+<fieldset>
+	Date:<input type="text" th:field="*{date}" placeholder="dd-MM-yyyy" th:text="${#dates.format(publicholiday.date, 'dd-MM-yyyy')}"/>
+	<p th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></p>
+</fieldset>
+<fieldset>
+	Name:<input type="text" th:field="*{name}">
+	<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+</fieldset>
+<fieldset>
+	<button type="submit">Save</button>
+</fieldset>
+</form>
+</body>
+</html>

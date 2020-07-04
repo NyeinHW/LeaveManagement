@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Add Leave Entitle</title>
+</head>
+<body>
+		<h2 align="center">Add/Edit LeaveType Details</h2>
+			<form class="form-horizontal" th:object="${leaveentitlement}"
+				th:action="@{/save}" method="get" onsubmit="return myfun();">
+				<input type="hidden" class="form-control" th:field="*{id}" />
+				<table align="center">
+								
+				<tr><td><label class="col-sm-2 control-label">LeaveType:</label></td>
+				<td><input type="text" class="form-control" id="leavetype" th:field="*{mykey.leavetype.type}" /></td>
+				<td><p style="color:red;" th:if="${#fields.hasErrors('mykey.leavetype')}" th:errors="mykey.leavetype"></p></td>
+				</tr>
+				
+				<tr><td><label class="col-sm-2 control-label">Role:</label></td>
+				<td><select class="form-control" id="role" name="role" th:field="*{mykey.role}">
+				<option value="default">--select--</option>
+						   <option value="STAFF">STAFF</option>
+						   <option value="MANAGER">MANAGER</option>
+						</select></td>
+						
+				<tr><td><label class="col-sm-2 control-label">MaxNoOfDays:</label></td>
+				<td><input type="number" min="0.0" max="60.0" class="form-control" id="maxnoofdays" th:field="*{mykey.maxnoofdays}" /></td>
+				</tr>	
+				
+				<tr><td><button type="submit" class="btn btn-primary" >Save</button></td></tr>
+				</table>
+			</form>
+</body>
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const message = urlParams.get('Message');
+    if(message !=null && message != ""){
+    	alert(message);
+    }
+</script>
+
+<script>
+
+function myfun()
+{
+	if(document.getElementById("leavetype").value=="")
+	{	alert("Leave Type cannot be empty..");
+	    return false;
+	} 
+	return true; 
+}
+
+</script>
+</html>

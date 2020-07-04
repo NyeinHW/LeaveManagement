@@ -1,40 +1,53 @@
 package nus.iss.edu.leave.model;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 @Entity
 @Table(name="leaveentitlement")
 public class LeaveEntitlement {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue
 	private int id;
-	@ManyToOne
-	private LeaveType leavetype;
-	private Role role;
-	private int leave_count;
+	private int leaveId;
 	
-	@OneToMany(mappedBy="leaveentitlement")
-	private List<LeaveBalance> leavebalance;
+	public Mykey mykey;
 	
-	@OneToMany(mappedBy="leaveentitlement")
-	private List<LeaveApplication> leaveapplication;
+	public Mykey getMykey() {
+		return mykey;
+	}
+	public void setMykey(Mykey mykey) {
+		this.mykey = mykey;
+	}
+	public int getLeaveId() {
+		return leaveId;
+	}
+	public void setLeaveId(int leaveId) {
+		this.leaveId = leaveId;
+		System.out.println(leaveId);
+	}
+	
+
 	
 	public LeaveEntitlement() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public LeaveEntitlement(LeaveType type, Role role, int leave_count) {
+	
+
+	public LeaveEntitlement(int id, Mykey mykey, @NotNull double maxnoofdays) {
 		super();
-		this.leavetype = type;
-		this.role = role;
-		this.leave_count = leave_count;
+		this.id = id;
+		this.mykey = mykey;
+	}
+	public LeaveEntitlement(int id , double maxnoofdays) {
+		super();
+		this.id = id;
+	}
+	public LeaveEntitlement(double maxnoofdays) {
+		super();
 	}
 	public int getId() {
 		return id;
@@ -42,28 +55,14 @@ public class LeaveEntitlement {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public LeaveType getType() {
-		return leavetype;
-	}
-	public void setType(LeaveType type) {
-		this.leavetype = type;
-	}
-	public Role getRole() {
-		return role;
-	}
-	public void setRole(Role role) {
-		this.role = role;
-	}
-	public int getLeave_count() {
-		return leave_count;
-	}
-	public void setLeave_count(int leave_count) {
-		this.leave_count = leave_count;
-	}
 	@Override
 	public String toString() {
-		return "LeaveEntitlement [type=" + leavetype + ", role=" + role + ", leave_count=" + leave_count + "]";
+		return "LeaveEntitlement [id=" + id + ", leaveId=" + leaveId + ", mykey=" + mykey + "]";
 	}
+
 	
+	
+	
+
 	
 }

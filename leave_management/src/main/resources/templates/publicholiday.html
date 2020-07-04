@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Public Holiday</title>
+<link rel="stylesheet" type="text/css" media="all" href="../../css/style1.css" data-th-href="@{/css/style1.css}" />
+</head>
+<body>
+<form action="#" th:action="@{/publicholiday/add}" method="GET">
+	<button th:utext="#{publicholiday.page.add}">label</button> 
+	</form>	
+	
+ 	<table border="1" th:if="${not #lists.isEmpty(holidays)}">
+ 		<tr><th colspan="3">List of Public Holidays(2020)</th></tr>
+			<tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Delete</th>
+            </tr>
+		<tr th:each="publicholiday:${holidays}">
+			<td th:text="${#dates.format(publicholiday.date, 'dd-MM-yyyy')}">Date</td>
+			<td th:text=${publicholiday.name}>Name</td>
+			<td><a th:href="@{/publicholiday/delete/}+${publicholiday.date}" th:utext="#{publicholiday.page.delete}">Delete</a></td>
+		</tr>
+	</table>
+
+</body>
+</html>
