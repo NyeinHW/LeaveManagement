@@ -10,7 +10,7 @@
 <body>
 	<h1>Your's Leave</h1>
 
-	<table class="table table-bordered table-hover">
+	<table border="1">
 		<tr>
 			<td>Start Date</td>
 			<td th:object="${leaveapplication}"
@@ -44,8 +44,9 @@
 			<td>Manager Comment</td>
 			<td th:text=${leaveapplication.manager_cmt}>Comment</td>
 		</tr>
+		
 		<tr>
-			<td></td>
+			<td> Status </td>
 			<td><a
 				th:if="${leaveapplication.status != T(nus.iss.edu.leave.model.Status).APPROVED and leaveapplication.status != T(nus.iss.edu.leave.model.Status).REJECTED and leaveapplication.status != T(nus.iss.edu.leave.model.Status).CANCELLED}"
 				href="EditLeaveApplication.html"

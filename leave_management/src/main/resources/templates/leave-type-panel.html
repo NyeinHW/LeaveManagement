@@ -3,6 +3,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" media="all" href="../../css/style.css" data-th-href="@{/css/style.css}" />
 </head>
 <body>
 <div class="container my-2">
@@ -16,7 +17,7 @@
             <div class="col-md-10">
                 <h2 th:case="null">No record found !!</h2>
                 <div th:case="*">
-                    <table class="table table-striped table-responsive-md">
+                    <table border="1">
                         <thead>
                             <tr>
                                 <th>Type</th>
