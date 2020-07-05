@@ -1,0 +1,39 @@
+.admin-list {
+	margin-top: 20px;
+  font-family: sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 115%;
+  overflow: auto;
+  width: auto;
+}
+
+th {
+	background-color: black;
+    color: white;
+    font-weight: normal;
+    padding: 20px 30px;
+    text-align: center;
+}
+
+td {
+	background-color: rgb(238, 238, 238);
+    color: rgb(111, 111, 111);
+    padding: 20px 30px;
+}
+
+button{
+	background-color: black;
+	display: block;
+    color: white;
+    font-weight: normal;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.card-body{
+	margin-left: 200px;
+}
+
+.tableheading {
+	text-align: center;
+}

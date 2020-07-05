@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
  
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Add Employee</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="ISO-8859-1">
+<title>Add Employee</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/admin.css}" />
 </head>
- 
+ <header th:insert="fragments/admin-general.html :: header"> </header>
 <body>
     <div class="container my-5">
         <h3> Add Employee</h3>

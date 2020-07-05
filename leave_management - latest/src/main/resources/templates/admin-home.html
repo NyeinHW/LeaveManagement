@@ -2,11 +2,19 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Admin Home</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/admin.css}" />
 </head>
+
 <body>
 <h1>Welcome Admin</h1>
-
 <a href="/admin/viewemployees">View Employees</a>
+
+<p class="my-5">
+<a href="/admin//viewleavetype" class="btn btn-primary">
+<i class="fas fa-user-plus ml-2"> Manage Leave Type </i></a>
+</p>
+            
 </body>
 </html>
